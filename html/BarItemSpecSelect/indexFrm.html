@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/aui.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/aui-skin.css" />
+    <style media="screen">
+        .app {
+            font-size: 13px;
+        }
+
+        .list {
+            background: #fff;
+            padding: 0 10px 0px 10px;
+        }
+
+        .list .title {
+            display: flex;
+            line-height: 50px;
+        }
+
+        .list .title .name {
+            flex: 1;
+            text-align: left;
+            font-size: 15px;
+        }
+
+        .list .title .icon {
+            flex: 1;
+            text-align: right;
+        }
+
+        .list .options {
+            line-height: 25px;
+        }
+
+        .list .options .option {
+            display: inline-block;
+            height: 30px;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            position: relative;
+        }
+
+        .list .options .option span {
+            border: 1px solid #e5e5e5;
+            display: inline-block;
+            width: 85px;
+            min-width: 85px;
+            border-radius: 3px;
+            height: 28px;
+            line-height: 28px;
+            font-size: 13px;
+            text-align: center;
+        }
+
+        .list .options .add {
+            background: #6cdaab;
+            color: #fff;
+            display: inline-flex;
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            margin-bottom: 10px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .list .options .add i {
+            color: #fff !important;
+            font-size: 12px;
+        }
+
+        .list .options .badge {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: #777;
+            color: #fff;
+            position: absolute;
+            top: -7px;
+            right: -7px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .list .options .badge i {
+            font-size: 10px;
+        }
+
+        .add-list {
+            padding: 10px;
+            text-align: center;
+        }
+
+        .add-list .add {
+            background: #6cdaab;
+            color: #fff;
+            display: inline-block;
+            width: 120px;
+            border-radius: 3px;
+            height: 40px;
+            line-height: 40px;
+            font-size: 13px;
+            text-align: center;
+        }
+
+        .add-list .add i {
+            color: #fff !important;
+        }
+
+        .buttons {
+            padding: 20px;
+        }
+
+        .buttons .longBtn {
+            height: 50px;
+            background: -webkit-linear-gradient(left, #6cdaac 50%, #5fcbcc);
+            color: #fff;
+            text-align: center;
+            line-height: 50px;
+            border-radius: 50px;
+            margin-bottom: 25px;
+        }
+
+        .spec-params-line {
+            height: .5rem;
+            background-color: #fff;
+            width: 100%;
+        }
+
+        .spec-params {
+            font-size: 12px;
+        }
+
+        .spec-params .flex {
+            display: flex;
+        }
+
+        .spec-params .flex .line {
+            flex: 1;
+            line-height: 30px;
+            padding: 5px 0;
+            text-align: center;
+        }
+
+        .spec-params .title {
+            width: 100%;
+            background: #f6f6f6;
+            border-bottom: 1px solid #f6f6f6;
+        }
+
+        .spec-params .content {
+            background: #fff;
+            padding-left: 10px;
+            padding-right: 10px;
+            padding-bottom: 20px;
+        }
+
+        .spec-params .content .item {
+            border-bottom: 1px solid #f6f6f6;
+        }
+
+        .spec-params .content .item .line {
+            padding: 5px 10px;
+        }
+
+        .spec-params .content .item .line .number {
+            border: 1px #e9e9e9 solid;
+            border-radius: 2px;
+            height: 30px;
+            width: 80%;
+            text-align: center;
+        }
+
+        .spec-params .aui-iconfont {
+            margin-left: 10px;
+            font-size: 12px !important;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app" class="app">
+        <div class="add-list">
+            <div class="add" tapmde @click="selectSpecTemplate">选择规格模版</div>
+        </div>
+        <div class="list" v-for="(specs,index) in content" v-key="specs">
+            <div class="title">
+                <input class="name" type="text" placeholder="请输入规格名称" v-model="specs.name">
+                <div class="icon">
+                    <i class="aui-iconfont aui-icon-close" tapmde @click="minusList(index)"></i>
+                </div>
+            </div>
+            <ul class="options">
+                <li class="option" v-for="(option,i) in specs.options" v-key="option">
+                    <span type="text" @click="editOption(index,i)" v-text="option"></span>
+                    <div class="badge">
+                        <i class="aui-iconfont aui-icon-close" tapmde @click="minusOption(index,i)"></i>
+                    </div>
+                </li>
+                <li class="add" tapmde @click="editOption(index)">
+                    <i class="aui-iconfont aui-icon-plus"></i>
+                </li>
+            </ul>
+        </div>
+        <div class="add-list">
+            <div class="add" tapmde @click="addList">
+                <i class="aui-iconfont aui-icon-plus"></i> 添加规格
+            </div>
+        </div>
+        <!-- 模版参数 -->
+        <div class="spec-params-line"></div>
+        <div class="spec-params">
+            <div class="flex title" id="title">
+                <div class="line">规格项</div>
+                <div class="line">价格(元) <i class="aui-iconfont aui-icon-edit" tapmde @click="editAllPrice"></i></div>
+                <div class="line">库存(件) <i class="aui-iconfont aui-icon-edit" tapmde @click="editAllCount"></i></div>
+            </div>
+            <div class="content" id="content">
+                <div class="flex item" v-for="(item,index) in spec_group_info">
+                    <div class="line" v-text="item.spec_option_group"></div>
+                    <div class="line">
+                        <div class="number" v-text="item.sell_price" tapmde @click="editThisPrice(index)"></div>
+                    </div>
+                    <div class="line">
+                        <div class="number" v-text="item.stock" tapmde @click="editThisCount(index)"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="../../script/api.js"></script>
+<script src="../../script/vue.min.js"></script>
+<script src="../../script/fastclick.js"></script>
+<script src="../../script/app.js"></script>
+<script>
+    var app = {};
+    apiready = function() {
+        api.parseTapmode();
+        // vue 控制
+        app = new Vue({
+            el: '#app',
+            data: {
+                content: [],
+                spec_group_info: []
+            },
+            methods: {
+                addList: function() {
+                    var that = this;
+                    api.prompt({
+                        buttons: ['确定', '取消'],
+                        type: 'text',
+                        title: '请输入规格名称',
+                    }, function(ret, err) {
+                        if (ret.buttonIndex == 1 && ret.text) {
+                            that.content.push({
+                                name: ret.text,
+                                options: [],
+                            });
+                            that._doExchange([], 0);
+                        }
+                    });
+                },
+                editOption: function(index, i) {
+                    var that = this;
+                    var text = '';
+                    if (i == 0 || i) {
+                        text = that.content[index].options[i];
+                    }
+                    api.prompt({
+                        buttons: ['确定', '取消'],
+                        type: 'text',
+                        title: '输入规格项名称',
+                        text: text
+                    }, function(ret, err) {
+                        if (ret.buttonIndex == 1 && ret.text) {
+                            if (i == 0 || i) {
+                                app.$set(that.content[index].options, i, ret.text)
+                            } else {
+                                that.content[index].options.push(ret.text);
+                            }
+                            that._doExchange([], 0);
+                        }
+                    });
+                },
+                minusList: function(id) {
+                    var that = this;
+                    api.confirm({
+                        title: '提示',
+                        msg: '确定要删除这个规格吗？',
+                        buttons: ['确定', '取消']
+                    }, function(ret, err) {
+                        if (ret.buttonIndex == 1) {
+                            that.content.splice(id, 1);
+                            that._doExchange([], 0);
+                        }
+                    });
+                },
+                minusOption: function(index, i) {
+                    var that = this;
+                    api.confirm({
+                        title: '提示',
+                        msg: '确定要删除这个规格项吗？',
+                        buttons: ['确定', '取消']
+                    }, function(ret, err) {
+                        if (ret.buttonIndex == 1) {
+                            that.content[index].options.splice(i, 1);
+                            that._doExchange([], 0);
+                        }
+                    });
+                },
+                // 规格参数
+                editThisPrice: function(i) {
+                    var that = this;
+                    var old = that.spec_group_info[i].sell_price;
+                    api.prompt({
+                        buttons: ['确定', '取消'],
+                        type: 'number',
+                        title: '设置统一价格',
+                        text: old
+                    }, function(ret, err) {
+                        if (ret.buttonIndex == 1 && ret.text) {
+                            that.spec_group_info[i].sell_price = ret.text
+                        }
+                    });
+                },
+                editThisCount: function(i) {
+                    var that = this;
+                    var old = that.spec_group_info[i].stock;
+                    api.prompt({
+                        buttons: ['确定', '取消'],
+                        type: 'number',
+                        title: '设置统一价格',
+                        text: old
+                    }, function(ret, err) {
+                        if (ret.buttonIndex == 1 && ret.text) {
+                            that.spec_group_info[i].stock = ret.text
+                        }
+                    });
+                },
+                editAllPrice: function() {
+                    var that = this;
+                    var old = that.spec_group_info[0].sell_price;
+                    api.prompt({
+                        buttons: ['确定', '取消'],
+                        type: 'number',
+                        title: '设置统一价格',
+                        text: old
+                    }, function(ret, err) {
+                        if (ret.buttonIndex == 1 && ret.text) {
+                            that.spec_group_info.forEach(function(item, index) {
+                                that.spec_group_info[index].sell_price = ret.text
+                            })
+                        }
+                    });
+                },
+                editAllCount: function() {
+                    var that = this;
+                    var old = that.spec_group_info[0].stock;
+                    api.prompt({
+                        buttons: ['确定', '取消'],
+                        type: 'number',
+                        title: '设置统一库存',
+                        text: old
+                    }, function(ret, err) {
+                        if (ret.buttonIndex == 1 && ret.text) {
+                            that.spec_group_info.forEach(function(item, index) {
+                                that.spec_group_info[index].stock = ret.text
+                            })
+                        }
+                    });
+                },
+                _doExchange: function(arr, index) {
+                    var that = this;
+                    var newArr = [];
+                    if(index == 0){
+                        this.content[index].options.forEach(function(next){
+                            newArr.push(next)
+                        });
+                        that._doExchange(newArr, index + 1);
+                    } else if(index == this.content.length){
+                        this.spec_group_info = arr.map(function(item){
+                            return {
+                                spec_option_group: item,
+                                sell_price: 0,
+                                stock: 0
+                            }
+                        });
+                    } else {
+                        this.content[index].options.forEach(function(next){
+                            arr.forEach(function(pre){
+                                newArr.push(next + '_' + pre);
+                            })
+                        })
+                        that._doExchange(newArr, index + 1);
+                    }
+                },
+                save: function() {
+                    var that = this;
+                    if (!that.content.length) {
+                        $app.toast('请添加规格内容');
+                        return;
+                    }
+                    for (var i = 0; i < that.content.length; i++) {
+                        if (!that.content[i].name || !that.content[i].options.length) {
+                            $app.toast('请完善规格内容，并且删除空的规格项');
+                            return;
+                        }
+                    }
+                    api.sendEvent({
+                        name: 'finishSelectSpec',
+                        extra: {
+                            content: this.content,
+                            spec_group_info: this.spec_group_info
+                        }
+                    });
+                    api.closeWin();
+                },
+                selectSpecTemplate: function() {
+                    $app.openWin({
+                        name: 'BarItemsSpecs',
+                        pageParam: {
+                            type: 'select',
+                        }
+                    })
+                }
+            },
+            mounted: function() {
+                this.content = api.pageParam.content || [];
+                this.spec_group_info = api.pageParam.spec_group_info || [];
+            }
+        });
+        api.addEventListener({
+            name: 'selectSpecInfo'
+        }, function(ret, err){
+            if( ret ){
+                 app.content = ret.value.content;
+                 app._doExchange([], 0);
+            }else{
+                 alert( JSON.stringify( err ) );
+            }
+        });
+
+        api.addEventListener({
+            name: 'BarItemSpecSelectSave'
+        }, function(ret, err){
+            app.save();
+        });
+
+
+    };
+</script>
+
+</html>

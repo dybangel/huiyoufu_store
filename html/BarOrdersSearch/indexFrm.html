@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/aui.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/aui-skin.css" />
+    <style media="screen">
+        .app{
+          font-size: 13px;
+        }
+        .list {
+            padding: 0 10px;
+            background: #fff;
+            margin-top: 5px;
+        }
+        .list .info{
+          margin-top: 10px;
+          background: #fff;
+          padding: 10px 0;
+          display: flex;
+        }
+        .list .info .item-image{
+          width: 60px;
+          height: 60px;
+          background: #ccc;
+          flex: 60px 0 0;
+        }
+        .list .info .item-info{
+          padding-left: 10px;
+          flex: 1;
+        }
+        .list .info .item-info .title{
+          font-size: 15px;
+          line-height: 20px;
+          display: flex;
+        }
+        .list .info .item-info .title span{
+          font-weight: bold;
+          margin-right: 10px;
+          flex: 1;
+        }
+        .list .info .item-info .title .status{
+          flex: 50px 0 0;
+          text-align:right;
+          font-size: 14px;
+        }
+        .list .info .item-info .line{
+          color: #777;
+        }
+        .list .info .item-info .content{
+          display: flex;
+        }
+        .list .info .item-info .content .lines{
+          flex: 1;
+        }
+        .list .info .item-info .content .icon{
+          text-align: right;
+          flex: 20px 0 0;
+          line-height: 30px;
+        }
+        .list .btns {
+            text-align: right;
+            border-top: 1px solid #f0f0f0;
+            padding: 10px 0;
+        }
+        .list .btns .btn {
+            display: inline-block;
+            padding: 3px 25px;
+            background: #fff;
+            border-radius: 20px;
+        }
+
+        .list .btns .btn-green {
+            background: #6cdaac;
+            color: #fff;
+        }
+
+        .list .btns .btn-default {
+            background: #fff;
+            border: 1px solid #ccc;
+        }
+        .no-order{
+          width: 100%;
+          min-height: 400px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+        .no-order .no{
+          font-size: 15px;
+          text-align: center;
+          line-height: 30px;
+        }
+        .no-order .no .icon{
+          margin-bottom: 30px;
+        }
+        .search-before{
+          padding: 10px 30px;
+        }
+        .search-before .options{
+          margin-bottom: 10px;
+        }
+        .search-before .options .title{
+          line-height: 30px;
+        }
+        .search-before .options .option .aui-btn{
+          margin-right: 10px;
+          font-size: 12px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app" class="app">
+      <div class="search-before">
+        <div class="options">
+            <div class="aui-row title">
+              <div class="aui-col-xs-11">历史搜索 </div>
+              <div class="aui-col-xs-1" style="text-align:center">
+                <i class="ali-iconfont icon-lajitong" tapmode></i>
+              </div>
+            </div>
+            <div class="option">
+              <div class="aui-btn">默认</div>
+              <div class="aui-btn">默认</div>
+              <div class="aui-btn">默认</div>
+              <div class="aui-btn">默认</div>
+            </div>
+        </div>
+        <div class="options">
+            <div class="title">热门搜索</div>
+            <div class="option">
+              <div class="aui-btn">默认</div>
+              <div class="aui-btn">默认</div>
+              <div class="aui-btn">默认</div>
+              <div class="aui-btn">默认</div>
+            </div>
+        </div>
+      </div>
+      <div class="search-after">
+        <div class="order-list">
+            <div class="list">
+                <div class="info" tapmode @click="goDetail">
+                    <div class="item-image"></div>
+                    <div class="item-info">
+                        <div class="title">
+                            <span>#16</span>
+                            <div class="status">待接单</div>
+                        </div>
+                        <div class="content">
+                          <div class="lines">
+                            <div class="line">收货人：韩梅梅</div>
+                            <div class="line">订单时间：2018.06.12 12:34:08</div>
+                          </div>
+                          <div class="icon">
+                            <i class="aui-iconfont aui-icon-right"></i>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="btns">
+                    <div class="btn btn-default">拒绝</div>
+                    <div class="btn btn-green">接单</div>
+                </div>
+            </div>
+            <div class="list">
+                <div class="info" tapmode @click="goDetail">
+                    <div class="item-image"></div>
+                    <div class="item-info">
+                        <div class="title">
+                            <span>#16</span>
+                            <div class="status">待发货</div>
+                        </div>
+                        <div class="content">
+                          <div class="lines">
+                            <div class="line">收货人：韩梅梅</div>
+                            <div class="line">订单时间：2018.06.12 12:34:08</div>
+                          </div>
+                          <div class="icon">
+                            <i class="aui-iconfont aui-icon-right"></i>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="btns">
+                    <div class="btn btn-green">去发货</div>
+                </div>
+            </div>
+            <div class="list">
+                <div class="info" tapmode @click="goDetail">
+                    <div class="item-image"></div>
+                    <div class="item-info">
+                        <div class="title">
+                            <span>#16</span>
+                            <div class="status">待收货</div>
+                        </div>
+                        <div class="content">
+                          <div class="lines">
+                            <div class="line">收货人：韩梅梅</div>
+                            <div class="line">订单时间：2018.06.12 12:34:08</div>
+                          </div>
+                          <div class="icon">
+                            <i class="aui-iconfont aui-icon-right"></i>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="list">
+                <div class="info" tapmode @click="goDetail">
+                    <div class="item-image"></div>
+                    <div class="item-info">
+                        <div class="title">
+                            <span>#16</span>
+                            <div class="status">退款中</div>
+                        </div>
+                        <div class="content">
+                          <div class="lines">
+                            <div class="line">收货人：韩梅梅</div>
+                            <div class="line">订单时间：2018.06.12 12:34:08</div>
+                          </div>
+                          <div class="icon">
+                            <i class="aui-iconfont aui-icon-right"></i>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="btns">
+                    <div class="btn btn-green">去处理</div>
+                </div>
+            </div>
+            <div class="list">
+                <div class="info" tapmode @click="goComment">
+                    <div class="item-image"></div>
+                    <div class="item-info">
+                        <div class="title">
+                            <span>#16</span>
+                            <div class="status">待评价</div>
+                        </div>
+                        <div class="content">
+                          <div class="lines">
+                            <div class="line">收货人：韩梅梅</div>
+                            <div class="line">订单时间：2018.06.12 12:34:08</div>
+                          </div>
+                          <div class="icon">
+                            <i class="aui-iconfont aui-icon-right"></i>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="list">
+                <div class="info" tapmode @click="goComment">
+                    <div class="item-image"></div>
+                    <div class="item-info">
+                        <div class="title">
+                            <span>#16</span>
+                            <div class="status">已完成</div>
+                        </div>
+                        <div class="content">
+                          <div class="lines">
+                            <div class="line">收货人：韩梅梅</div>
+                            <div class="line">订单时间：2018.06.12 12:34:08</div>
+                          </div>
+                          <div class="icon">
+                            <i class="aui-iconfont aui-icon-right"></i>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="no-order">
+          <div class="no">
+            <div class="icon"><i class="ali-iconfont icon-wusousuojieguo" style="font-size:40px;"></i></div>
+            <div>暂无相关结果</div>
+            <div>请重新搜索喜欢的商品</div>
+          </div>
+        </div>
+      </div>
+    </div>
+</body>
+<script src="../../script/api.js"></script>
+<script src="../../script/vue.min.js"></script>
+<script src="../../script/fastclick.js"></script>
+<script src="../../script/app.js"></script>
+<script>
+    apiready = function() {
+        $app.ready()
+        api.parseTapmode();
+
+        var app = new Vue({
+            el: '#app',
+            data: {
+                index: 1
+            },
+            computed: {
+
+            },
+            methods: {
+              goDetail: function(){
+                $app.openWin({
+                  name:'BarOrdersDetail',
+                })
+              },
+              goComment: function() {
+                  $app.openWin({
+                      name: 'BarOrdersComment',
+                  })
+              }
+            },
+            watch: {
+
+            }
+        });
+    };
+</script>
+
+</html>

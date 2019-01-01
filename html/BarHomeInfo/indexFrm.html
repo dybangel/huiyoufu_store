@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/aui.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/aui-skin.css" />
+    <style media="screen">
+        .aui-list {
+            margin-top: 8px;
+        }
+
+        .image {
+            border: 1px solid #e5e5e5;
+            border-radius: 50%;
+            margin: 10px 0;
+            overflow: hidden;
+            padding: 1px;
+        }
+
+        .image img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+        }
+
+        input {
+            text-align: right;
+        }
+
+        .buttons {
+            padding: 30px;
+        }
+
+        .buttons .loginout {
+            height: 50px;
+            background: -webkit-linear-gradient(left, #6cdaac 50%, #5fcbcc);
+            color: #fff;
+            text-align: center;
+            line-height: 50px;
+            border-radius: 50px;
+            margin-bottom: 25px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app" class="app">
+        <ul class="aui-list aui-list-in ">
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-title">营业状态</div>
+                    <div class="aui-list-item-right">
+                        <span style="line-height:25px;" :style="{color:data.is_business?'#5fcbcc':'#777'}" v-text="data.is_business?'营业中':'已打烊'"></span>
+                        <input tapmde @change="changeBusiness" type="checkbox" class="aui-switch" v-model="data.is_business">
+                    </div>
+                </div>
+            </li>
+            <li class="aui-list-item" tapmde @click="selectStarTime">
+                <div class="aui-list-item-inner aui-list-item-arrow">
+                    <div class="aui-list-item-title">开始营业</div>
+                    <div class="aui-list-item-right" v-text="data.begin_time"></div>
+                </div>
+            </li>
+            <li class="aui-list-item" tapmde @click="selectEndTime">
+                <div class="aui-list-item-inner aui-list-item-arrow">
+                    <div class="aui-list-item-title">结束营业</div>
+                    <div class="aui-list-item-right" v-text="data.end_time"></div>
+                </div>
+            </li>
+            <li class="aui-list-item" tapmde @click="inputSendMoney">
+                <div class="aui-list-item-inner aui-list-item-arrow">
+                    <div class="aui-list-item-title">起送金额</div>
+                    <div class="aui-list-item-right" v-text="data.basic_send_money"></div>
+                </div>
+            </li>
+            <li class="aui-list-item" tapmde @click="inputSendDistance">
+                <div class="aui-list-item-inner aui-list-item-arrow">
+                    <div class="aui-list-item-title">配送距离(米)</div>
+                    <div class="aui-list-item-right" v-text="data.send_distance"></div>
+                </div>
+            </li>
+        </ul>
+
+        <ul class="aui-list aui-list-in">
+            <li class="aui-list-item" tapmde @click="changeThum">
+                <div class="aui-list-item-inner aui-list-item-arrow">
+                    <div class="aui-list-item-title">店铺头像</div>
+                    <div class="aui-list-item-right">
+                        <div class="image">
+                            <img :src="data.thum">
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="aui-list-item" tapmde @click="inputShopName">
+                <div class="aui-list-item-inner aui-list-item-arrow">
+                    <div class="aui-list-item-title">店铺名称</div>
+                    <div class="aui-list-item-right" v-text="data.name"></div>
+
+                </div>
+            </li>
+            <li class="aui-list-item" tapmde @click="inputShopMobile">
+                <div class="aui-list-item-inner aui-list-item-arrow">
+                    <div class="aui-list-item-title">店铺电话</div>
+                    <div class="aui-list-item-right" v-text="data.mobile"></div>
+                </div>
+            </li>
+            <li class="aui-list-item" tapmode @click="selectAddress">
+                <div class="aui-list-item-inner aui-list-item-arrow">
+                    <div class="aui-list-item-title">店铺地址</div>
+                    <div class="aui-list-item-right" v-text="data.address"></div>
+                </div>
+            </li>
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-title">所属商场</div>
+                    <div class="aui-list-item-right" v-text="data.trade_area_info.name"></div>
+                </div>
+            </li>
+        </ul>
+        <ul class="aui-list aui-list-in">
+            <li class="aui-list-item" tapmde @click="setting">
+                <div class="aui-list-item-inner aui-list-item-arrow">
+                    <div class="aui-list-item-title">账户安全设置</div>
+                    <div class="aui-list-item-right"></div>
+                </div>
+            </li>
+        </ul>
+        <div class="buttons">
+            <div class="loginout" tapmde @click="logout">退出登录</div>
+        </div>
+    </div>
+</body>
+<script src="../../script/api.js"></script>
+<script src="../../script/vue.min.js"></script>
+<script src="../../script/fastclick.js"></script>
+<script src="../../script/app.js"></script>
+<script>
+    $app.ready()
+    apiready = function() {
+        api.parseTapmode();
+        // vue 控制
+        var app = new Vue({
+            el: '#app',
+            data: {
+                data: {
+                    trade_area_info: {}
+                },
+            },
+            methods: {
+                // 选择开始时间
+                selectStarTime: function() {
+                    var that = this;
+                    api.openPicker({
+                        type: 'time',
+                        date: '06:00',
+                        title: '选择时间'
+                    }, function(ret, err) {
+                        if (ret) {
+                            that.data.begin_time = that._ad0(ret.hour) + ':' + that._ad0(ret.minute) + ':00';
+                            that.update()
+                        }
+                    });
+                },
+                // 选择结束时间
+                selectEndTime: function() {
+                    var that = this;
+                    api.openPicker({
+                        type: 'time',
+                        date: '18:00',
+                        title: '选择时间'
+                    }, function(ret, err) {
+                        if (ret) {
+                            that.data.end_time = that._ad0(ret.hour) + ':' + that._ad0(ret.minute) + ':00';
+                            that.update();
+                        }
+                    });
+                },
+                _ad0: function(num) {
+                    var ad0 = num < 10 ? '0' + num : num;
+                    return ad0;
+                },
+                // 修改头像
+                changeThum: function() {
+                    var that = this
+                    api.actionSheet({
+                        cancelTitle: '取消',
+                        buttons: ['拍照', '图库']
+                    }, function(ret, err) {
+                        var index = ['', 'camera', 'library'];
+                        if (ret.buttonIndex == 3) {
+                            return
+                        }
+                        api.getPicture({
+                            sourceType: index[ret.buttonIndex],
+                            encodingType: 'jpg',
+                            mediaValue: 'pic',
+                            destinationType: 'url',
+                            allowEdit: true,
+                            quality: 50,
+                            saveToPhotoAlbum: false
+                        }, function(ret, err) {
+                            if (ret) {
+                                $app.ajax({
+                                    url: $app.apiUrl.uploadFile,
+                                    type: 'files',
+                                    data: {
+                                        file: ret.data
+                                    },
+                                    values: {
+                                        save_path: $app.config.userImages,
+                                        is_rename: 1
+                                    }
+                                }).then(function(ret) {
+                                    that.data.thum = ret.data.host_file_path;
+                                    that.update()
+                                })
+                            }
+                        });
+                    });
+                },
+                // 修改起送金额
+                inputSendMoney: function() {
+                    var that = this;
+                    api.prompt({
+                        buttons: ['确定', '取消'],
+                        type: 'number',
+                        title: '请输入起送金额',
+                        text: that.data.basic_send_money
+                    }, function(ret, err) {
+                        if (ret) {
+                            if (ret.buttonIndex == 1 && ret.text) {
+                                that.data.basic_send_money = ret.text;
+                                that.update()
+                            }
+                        }
+                    });
+                },
+                // 修改配送距离
+                inputSendDistance: function() {
+                    var that = this;
+                    api.prompt({
+                        buttons: ['确定', '取消'],
+                        type: 'number',
+                        title: '请输入配送距离(米)',
+                        text: that.data.send_distance
+                    }, function(ret, err) {
+                        if (ret) {
+                            if (ret.buttonIndex == 1 && ret.text) {
+                                that.data.send_distance = ret.text;
+                                that.update()
+                            }
+                        }
+                    });
+                },
+                // 修改店铺名称
+                inputShopName: function() {
+                    var that = this;
+                    api.prompt({
+                        buttons: ['确定', '取消'],
+                        type: 'text',
+                        title: '请输入店铺名称',
+                        text: that.data.name
+                    }, function(ret, err) {
+                        if (ret) {
+                            if (ret.buttonIndex == 1 && ret.text) {
+                                that.data.name = ret.text;
+                                that.update()
+                            }
+                        }
+                    });
+                },
+                // 修改电话号码
+                inputShopMobile: function() {
+                    var that = this;
+                    api.prompt({
+                        buttons: ['确定', '取消'],
+                        type: 'number',
+                        title: '请输入电话号码',
+                        text: that.data.mobile
+                    }, function(ret, err) {
+                        if (ret && ret.buttonIndex == 1 && ret.text) {
+                            if ($app.validate.mobile(ret.text)) {
+                                that.data.mobile = ret.text
+                                that.update()
+                            } else {
+                                $app.toast('电话号码格式不正确');
+                            }
+                        }
+                    });
+                },
+                update: function() {
+                    $app.ajax({
+                        url: $app.apiUrl.shopUpdate,
+                        data: this.data,
+                    }).then(function(ret) {
+                        $app.toast(ret.msg);
+                    })
+                },
+                // 改变店铺状态
+                changeBusiness: function() {
+                    api.sendEvent({
+                        name: 'changeBusiness',
+                        extra: {
+                            status: this.data.is_business
+                        }
+                    });
+                },
+                // 退出登录
+                logout: function() {
+                    api.confirm({
+                        title: '确认退出登录?',
+                        buttons: ['确定', '取消']
+                    }, function(ret, err) {
+                        if (ret.buttonIndex == 1) {
+                            api.sendEvent({
+                                name: 'logout',
+                            });
+                            api.closeWin();
+                        }
+                    });
+                },
+                // 读取店铺数据
+                readShopInfo: function() {
+                    var that = this;
+                    $app.ajax({
+                        url: $app.apiUrl.readShopInfo
+                    }).then(function(ret) {
+                        that.data = ret.data;
+                    })
+                },
+
+                // 跳转到设置页面
+                setting: function() {
+                    $app.openWin({
+                        name: 'BarHomeSetting'
+                    })
+                },
+
+                // 选择店铺地址
+                selectAddress: function() {
+                    $app.openWin({
+                        name: 'BarHomeSettingAddress'
+                    })
+                }
+            },
+            mounted: function() {
+                this.readShopInfo();
+            }
+        });
+        // 下拉刷新
+        api.setRefreshHeaderInfo({
+            bgColor: '#fff',
+        }, function(ret, err) {
+            app.readShopInfo();
+        });
+
+        api.addEventListener({
+            name: 'selectBarHomeSettingAddress'
+        }, function(ret, err) {
+            if (ret) {
+                app.data.longitude = ret.value.poi.lon;
+                app.data.latitude = ret.value.poi.lat;
+                app.data.address = ret.value.poi.name;
+                app.update();
+            } else {
+                alert(JSON.stringify(err));
+            }
+        });
+
+
+    };
+</script>
+
+</html>

@@ -1,0 +1,331 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>支出额度记录</title>
+<meta name="keywords" content="有爱的" />
+<meta name="description" content="有爱的" />
+<link rel="icon" href="/favicon.ico" mce_href="/favicon.ico" type="image/x-icon"/>
+<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<link rel="stylesheet" href="css/style.css"/>
+<link rel="stylesheet" href="css/data.css"/>
+<link href="css/iconfont/Rjdaoico.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+<script type="text/javascript" src="js/slider.js"></script>
+<!--下拉动画-->
+<link rel="stylesheet" href="css/animate.min.css"/>
+<script type="text/javascript" src="js/wow.min.js"></script>
+<script>
+	if (!(/msie [6|7|8|9]/i.test(navigator.userAgent))){
+		new WOW().init();
+	};
+	$(function(){
+		
+	});
+</script>
+<!--下拉动画-->
+<script type="text/javascript">
+	function timer(opj){
+		$(opj).find('ul').animate({
+			marginTop : "-3.0rem"  
+			},500,function(){  
+			$(this).css({marginTop : "0.0rem"}).find("a:first").appendTo(this);  
+		})  
+	}
+	$(function(){ 
+		var num = $('.notice_active').find('a').length;
+		if(num > 1){
+		   var time=setInterval('timer(".notice_active")',3500);
+			$('.gg_more a').mousemove(function(){
+				clearInterval(time);
+			}).mouseout(function(){
+				time = setInterval('timer(".notice_active")',3500);
+			}); 
+		}
+		
+		$(".news_ck").click(function(){
+			location.href = $(".notice_active .notice_active_ch").children(":input").val();
+		})
+	});
+</script>
+
+</head>
+
+<body>
+
+
+<div class="datamain">
+<!---头部 开始 --->
+	<div class="data-nav">
+    	<div class="bw">
+        	<a href="javascript:history.go(-1)" class="l"><i class="icon-eee3"></i></a>
+            	<div class="name">支出额度记录</div>
+        	<a href="user_doubt.html" class="r"><i class="icon-ecfa"></i></a>
+        </div>
+    </div>
+    <div class="h-height"></div>
+<!---头部 结束 --->
+
+
+<div class="data-nums3" style="margin-top:30px; margin-bottom:40px;"><em class="wow flipInY">9628.00</em><span>捐出金额</span></div>
+
+
+
+<div class="data-juan-list">
+    <a href="" class="item-name2">
+    	<div class="coml">
+            <dl class="wow slideInRight">受捐人：<span>程意</span></dl>
+            <dl class="wow flipInY">电话：<span>136****9881</span></dl>
+            <i class="icon-eed3"></i>
+        </div>
+        <div class="comr">
+            <dl class="wow slideInLeft">捐出金额：￥<span>300.00</span></dl>
+        </div>
+        <div class="info">
+        	地点：浙江省杭州市萧山区宁围镇二桥村362号
+        </div>
+    </a>
+    
+    <a href="" class="item-name2">
+    	<div class="coml">
+            <dl class="wow slideInRight">受捐人：<span>刘善</span></dl>
+            <dl class="wow flipInY">电话：<span>187****3444</span></dl>
+            <i class="icon-eed3"></i>
+        </div>
+        <div class="comr">
+            <dl class="wow slideInLeft">捐出金额：￥<span>600.00</span></dl>
+        </div>
+        <div class="info">
+        	地点：广东省广州市越秀区中山六路109号
+        </div>
+    </a>
+    
+    <a href="" class="item-name2">
+    	<div class="coml">
+            <dl class="wow slideInRight">受捐人：<span>张宇新</span></dl>
+            <dl class="wow flipInY">电话：<span>138****0062</span></dl>
+            <i class="icon-eed3"></i>
+        </div>
+        <div class="comr">
+            <dl class="wow slideInLeft">捐出金额：￥<span>1200.00</span></dl>
+        </div>
+        <div class="info">
+        	地点：上海市浦东新区张杨北路
+        </div>
+    </a>
+    
+    <a href="" class="item-name2">
+    	<div class="coml">
+            <dl class="wow slideInRight">受捐人：<span>吕小清</span></dl>
+            <dl class="wow flipInY">电话：<span>187****9800</span></dl>
+            <i class="icon-eed3"></i>
+        </div>
+        <div class="comr">
+            <dl class="wow slideInLeft">捐出金额：￥<span>400.00</span></dl>
+        </div>
+        <div class="info">
+        	地点：江西省上饶市玉山县怀玉乡
+        </div>
+    </a>
+    
+    <a href="" class="item-name2">
+    	<div class="coml">
+            <dl class="wow slideInRight">受捐人：<span>程意</span></dl>
+            <dl class="wow flipInY">电话：<span>136****9881</span></dl>
+            <i class="icon-eed3"></i>
+        </div>
+        <div class="comr">
+            <dl class="wow slideInLeft">捐出金额：￥<span>300.00</span></dl>
+        </div>
+        <div class="info">
+        	地点：浙江省杭州市萧山区宁围镇二桥村362号
+        </div>
+    </a>
+    
+    <a href="" class="item-name2">
+    	<div class="coml">
+            <dl class="wow slideInRight">受捐人：<span>刘善</span></dl>
+            <dl class="wow flipInY">电话：<span>187****3444</span></dl>
+            <i class="icon-eed3"></i>
+        </div>
+        <div class="comr">
+            <dl class="wow slideInLeft">捐出金额：￥<span>600.00</span></dl>
+        </div>
+        <div class="info">
+        	地点：广东省广州市越秀区中山六路109号
+        </div>
+    </a>
+    
+    <a href="" class="item-name2">
+    	<div class="coml">
+            <dl class="wow slideInRight">受捐人：<span>张宇新</span></dl>
+            <dl class="wow flipInY">电话：<span>138****0062</span></dl>
+            <i class="icon-eed3"></i>
+        </div>
+        <div class="comr">
+            <dl class="wow slideInLeft">捐出金额：￥<span>1200.00</span></dl>
+        </div>
+        <div class="info">
+        	地点：上海市浦东新区张杨北路
+        </div>
+    </a>
+    
+    <a href="" class="item-name2">
+    	<div class="coml">
+            <dl class="wow slideInRight">受捐人：<span>吕小清</span></dl>
+            <dl class="wow flipInY">电话：<span>187****9800</span></dl>
+            <i class="icon-eed3"></i>
+        </div>
+        <div class="comr">
+            <dl class="wow slideInLeft">捐出金额：￥<span>400.00</span></dl>
+        </div>
+        <div class="info">
+        	地点：江西省上饶市玉山县怀玉乡
+        </div>
+    </a>
+    
+    <a href="" class="item-name2">
+    	<div class="coml">
+            <dl class="wow slideInRight">受捐人：<span>程意</span></dl>
+            <dl class="wow flipInY">电话：<span>136****9881</span></dl>
+            <i class="icon-eed3"></i>
+        </div>
+        <div class="comr">
+            <dl class="wow slideInLeft">捐出金额：￥<span>300.00</span></dl>
+        </div>
+        <div class="info">
+        	地点：浙江省杭州市萧山区宁围镇二桥村362号
+        </div>
+    </a>
+    
+    <a href="" class="item-name2">
+    	<div class="coml">
+            <dl class="wow slideInRight">受捐人：<span>刘善</span></dl>
+            <dl class="wow flipInY">电话：<span>187****3444</span></dl>
+            <i class="icon-eed3"></i>
+        </div>
+        <div class="comr">
+            <dl class="wow slideInLeft">捐出金额：￥<span>600.00</span></dl>
+        </div>
+        <div class="info">
+        	地点：广东省广州市越秀区中山六路109号
+        </div>
+    </a>
+    
+    <a href="" class="item-name2">
+    	<div class="coml">
+            <dl class="wow slideInRight">受捐人：<span>张宇新</span></dl>
+            <dl class="wow flipInY">电话：<span>138****0062</span></dl>
+            <i class="icon-eed3"></i>
+        </div>
+        <div class="comr">
+            <dl class="wow slideInLeft">捐出金额：￥<span>1200.00</span></dl>
+        </div>
+        <div class="info">
+        	地点：上海市浦东新区张杨北路
+        </div>
+    </a>
+    
+    <a href="" class="item-name2">
+    	<div class="coml">
+            <dl class="wow slideInRight">受捐人：<span>吕小清</span></dl>
+            <dl class="wow flipInY">电话：<span>187****9800</span></dl>
+            <i class="icon-eed3"></i>
+        </div>
+        <div class="comr">
+            <dl class="wow slideInLeft">捐出金额：￥<span>400.00</span></dl>
+        </div>
+        <div class="info">
+        	地点：江西省上饶市玉山县怀玉乡
+        </div>
+    </a>
+    
+    <a href="" class="item-name2">
+    	<div class="coml">
+            <dl class="wow slideInRight">受捐人：<span>程意</span></dl>
+            <dl class="wow flipInY">电话：<span>136****9881</span></dl>
+            <i class="icon-eed3"></i>
+        </div>
+        <div class="comr">
+            <dl class="wow slideInLeft">捐出金额：￥<span>300.00</span></dl>
+        </div>
+        <div class="info">
+        	地点：浙江省杭州市萧山区宁围镇二桥村362号
+        </div>
+    </a>
+    
+    <a href="" class="item-name2">
+    	<div class="coml">
+            <dl class="wow slideInRight">受捐人：<span>刘善</span></dl>
+            <dl class="wow flipInY">电话：<span>187****3444</span></dl>
+            <i class="icon-eed3"></i>
+        </div>
+        <div class="comr">
+            <dl class="wow slideInLeft">捐出金额：￥<span>600.00</span></dl>
+        </div>
+        <div class="info">
+        	地点：广东省广州市越秀区中山六路109号
+        </div>
+    </a>
+    
+    <a href="" class="item-name2">
+    	<div class="coml">
+            <dl class="wow slideInRight">受捐人：<span>张宇新</span></dl>
+            <dl class="wow flipInY">电话：<span>138****0062</span></dl>
+            <i class="icon-eed3"></i>
+        </div>
+        <div class="comr">
+            <dl class="wow slideInLeft">捐出金额：￥<span>1200.00</span></dl>
+        </div>
+        <div class="info">
+        	地点：上海市浦东新区张杨北路
+        </div>
+    </a>
+    
+    <a href="" class="item-name2">
+    	<div class="coml">
+            <dl class="wow slideInRight">受捐人：<span>吕小清</span></dl>
+            <dl class="wow flipInY">电话：<span>187****9800</span></dl>
+            <i class="icon-eed3"></i>
+        </div>
+        <div class="comr">
+            <dl class="wow slideInLeft">捐出金额：￥<span>400.00</span></dl>
+        </div>
+        <div class="info">
+        	地点：江西省上饶市玉山县怀玉乡
+        </div>
+    </a>
+    
+
+
+</div>
+
+<div class="pageType">
+<ul class="pagination">
+<li class="disabled"><dl>上一页</dl></li>
+<li><a href="">下一页</a></li>
+<li class='pageRemark'>共<b>3</b>页 <b>43</b>条数据</li>
+</ul>
+</div>
+
+
+
+</div>
+
+
+
+
+
+<div class="f-height"></div>
+<div class="data-footer">
+	<a href="data_zhichu.html" class="w3 cur">捐款详情</a>
+    <a href="data_zhichu2.html" class="w3">工资记录</a>
+    <a href="data_zhichu3.html" class="w3">日常支出</a>
+</div>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/aui.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/aui-skin.css" />
+    <style media="screen">
+        .lists {
+            padding: 5px;
+            display: flex;
+            flex-wrap: wrap;
+            color: #fff;
+        }
+
+        .lists .list {
+            padding: 5px;
+            flex: 50% 0 0;
+            position: relative;
+        }
+
+        .lists .list img {
+            width: 100%;
+        }
+
+        .lists .list .info {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .lists .list .info .flex {
+            text-align: center;
+        }
+
+        .lists .list .info .flex i {
+            font-size: 40px !important;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app" class="app">
+        <div class="lists">
+            <div class="list">
+                <img src="./1.png">
+                <div class="info" tapmode @click="open('BarHelpMinus')">
+                    <div class="flex">
+                        <div class="icon"><i class="ali-iconfont icon-manjian"></i></div>
+                        <div class="text">满减优惠</div>
+                    </div>
+                </div>
+            </div>
+            <div class="list">
+                <img src="./2.png">
+                <div class="info" tapmode @click="open('BarHelpDiscounts')">
+                    <div class="flex">
+                        <div class="icon"><i class="ali-iconfont icon-youhui"></i></div>
+                        <div class="text">商品折扣</div>
+                    </div>
+                </div>
+            </div>
+            <div class="list">
+                <img src="./3.png">
+                <div class="info" tapmode @click="open('BarHelpGenerlist')">
+                    <div class="flex">
+                        <div class="icon"><i class="ali-iconfont icon-fenxiang"></i></div>
+                        <div class="text">店面推广</div>
+                    </div>
+                </div>
+            </div>
+            <div class="list">
+                <img src="./6.png">
+                <div class="info" tapmode @click="open('BarHelpAdlist')">
+                    <div class="flex">
+                        <div class="icon"><i class="ali-iconfont icon-feiji"></i></div>
+                        <div class="text">广告发布</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="../../script/api.js"></script>
+<script src="../../script/vue.min.js"></script>
+<script src="../../script/fastclick.js"></script>
+<script src="../../script/app.js"></script>
+<script>
+    $app.ready();
+    apiready = function() {
+        api.parseTapmode();
+        var app = new Vue({
+            el: '#app',
+            methods: {
+                open: function(name) {
+                    $app.openWin({
+                        name: name
+                    })
+                }
+            },
+        });
+    };
+</script>
+
+</html>

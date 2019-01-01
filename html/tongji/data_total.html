@@ -1,0 +1,207 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>平台总额度</title>
+<meta name="keywords" content="有爱的" />
+<meta name="description" content="有爱的" />
+<link rel="icon" href="/favicon.ico" mce_href="/favicon.ico" type="image/x-icon"/>
+<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<link rel="stylesheet" href="css/style.css"/>
+<link rel="stylesheet" href="css/data.css"/>
+<link href="css/iconfont/Rjdaoico.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="http://libs.baidu.com/jquery/1.9.0/jquery.js"></script>
+<script type="text/javascript" src="js/slider.js"></script>
+<!--下拉动画-->
+<link rel="stylesheet" href="css/animate.min.css"/>
+<script type="text/javascript" src="js/wow.min.js"></script>
+<script>
+	if (!(/msie [6|7|8|9]/i.test(navigator.userAgent))){
+		new WOW().init();
+	};
+	$(function(){
+		
+	});
+</script>
+<!--下拉动画-->
+
+<script src="https://img.hcharts.cn/highcharts/highcharts.js"></script>
+<!--<script src="js/highcharts.js"></script>
+<script src="https://img.hcharts.cn/highcharts/highcharts.js"></script>
+<script src="https://img.hcharts.cn/highcharts/modules/exporting.js"></script>
+<script src="https://img.hcharts.cn/highcharts-plugins/highcharts-zh_CN.js"></script>
+<script src="https://img.hcharts.cn/highcharts/themes/grid-light.js"></script>
+-->
+</head>
+
+<body>
+
+
+<div class="datamain">
+<!---头部 开始 --->
+	<div class="data-nav">
+    	<div class="bw">
+        	<a href="javascript:history.go(-1)" class="l"><i class="icon-eee3"></i></a>
+            	<div class="name">平台总额度</div>
+        	<a href="user_doubt.html" class="r"><i class="icon-ecfa"></i></a>
+        </div>
+    </div>
+    <div class="h-height"></div>
+<!---头部 结束 --->
+
+<div class="data-nums" style="margin-top:20px;"><em class="wow flipInY">2341784.00</em><span>平台总收入额</span></div>
+<div class="data-nums"><em style="color:#0FF" class="wow flipInY">160684.86</em><span>平台剩余额度</span></div>
+
+
+<div class="data-but1">
+	<a href="">查看收入记录</a>
+    <a href="">查看出账记录</a>
+</div>
+
+
+<div id="container" style="width:100%;height:300px; margin:20px auto 0 auto" class="wow zoomIn"></div>
+
+<script>
+$(function () {
+
+$('#container').highcharts({ 
+
+	chart: {
+		type: 'area',
+		spacingBottom: 30,
+		backgroundColor: 'rgba(0,0,0,0)'
+	},
+	legend: {
+            //去掉底部的series名称
+			enabled: false,
+    },
+	title: {
+		text: ''
+	},
+	subtitle: {
+		text:false,
+		floating: false,
+		align: 'right',
+		//verticalAlign: 'bottom',
+		//y: 15
+	},
+	/*
+	legend: {
+		layout: 'vertical',
+		align: 'left',
+		verticalAlign: 'top',
+		x: 150,
+		y: 100,
+		floating: true,
+		borderWidth: 1,
+		backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '#FFFFFF'
+	},
+	*/
+
+	xAxis: {
+		lineColor: '#5EB8EE', 
+        lineWidth: 1, 
+        tickColor: '#5EB8EE', 
+        tickLength: 5, 
+        tickWidth: 1, 
+		gridLineColor:'#5EB8EE',
+		plotBorderColor:'#5EB8EE',
+		categories: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
+		labels: {
+			//enabled:false, //去掉分类名称
+			formatter: function () {
+				return this.value;
+			},
+			style: {
+				color: '#b8def5',
+				fontSize:'12px',
+				fontFamily:'微软雅黑'
+			}
+		}
+	},
+	
+	yAxis: {
+		lineColor: '#5EB8EE', 
+        lineWidth: 1, 
+        tickColor: '#5EB8EE', 
+        tickLength: 5, 
+        tickWidth: 1, 
+		gridLineColor:'#5EB8EE',
+		title: {
+			text:false,
+			
+		},
+		
+		labels: {
+			formatter: function () {
+				return this.value;
+			},
+			style: {
+				color: '#b8def5',
+				fontSize:'10px',
+				fontFamily:'微软雅黑'
+			}
+		}
+	},
+	//数据点提示框
+	
+	/*tooltip: {
+		headerFormat: '',
+		pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+	},*/
+	tooltip: {
+		formatter: function () {
+			return '<b>' + this.series.name + '</b><br/>' +
+				this.x + '月: ￥' + this.y;
+		}
+	},
+	
+	plotOptions: {
+            areaspline: {
+                color:'#rgba(0, 0, 0, 0.8)',
+                lineColor:'#000',
+                fillOpacity: 0.2
+            }
+        },
+
+	credits: {
+		enabled: false
+	},
+	series: [{
+		name: '月入额',
+		data: [223.00,308.6,562.01,976.33,623.41,856.99,388.88,463.21,800.56,798.20,null,null],
+		marker:{//线上数据点
+			  radius:5,
+			  lineWidth:2,
+			  lineColor:'#a6e1f8',
+			  fillColor:'#0090d1',
+			  states:{
+				  hover:{
+					  lineColor:'#fe7a6b',
+					  fillColor:'#fe7a6b',
+					  //enabled:false
+				  }
+			  }
+		}
+
+	}]
+	
+}); 
+});
+</script>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

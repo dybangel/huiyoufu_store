@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/aui.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/aui-skin.css" />
+    <style media="screen">
+      .app{
+        font-size: 13px;
+        padding: 10px;
+      }
+      .notice-c{
+        padding: 10px;
+        background: #fff;
+        border-radius: 5px;
+        margin-bottom: 10px;
+      }
+      .notice-c .text{
+        line-height: 25px;
+        margin-bottom: 10px;
+      }
+      .notice-c .notice{
+        line-height: 25px;
+        color: red;
+      }
+      .pay{
+        padding: 10px;
+        background: #fff;
+        border-radius: 5px;
+      }
+      .pay .title{
+        line-height: 30px;
+      }
+      .pay .money{
+
+        border-bottom: 1px solid #e5e5e5;
+        display: flex;
+        line-height: 50px;
+        margin-bottom: 30px;
+      }
+      .pay .money span{
+        flex: 30px 0 0;
+        font-size: 20px;
+      }
+      .pay .money input{
+        flex: 1;
+        font-size: 30px;
+        line-height: 50px;
+      }
+      .buttons .longBtn {
+          height: 50px;
+          background: -webkit-linear-gradient(left, #6cdaac 50%, #5fcbcc);
+          color: #fff;
+          text-align: center;
+          line-height: 50px;
+          border-radius: 50px;
+          margin-bottom: 20px;
+      }
+      .select{
+        text-align: right;
+        margin-bottom: 10px;
+      }
+      .select span{
+          color: #5fcbcc;
+      }
+      .select .green {
+          color: #5fcbcc;
+      }
+      .select .white {
+          color: #ccc;
+      }
+    </style>
+</head>
+
+<body>
+    <div id="app" class="app">
+      <div class="notice-c">
+        <div class="text" v-text="params.intro"></div>
+        <div class="notice">提示：活动开启活动靠前，则您的店铺排名也会靠前哦</div>
+      </div>
+      <div class="pay">
+        <div class="title">推广金额</div>
+        <div class="money">
+            <span>￥</span>
+            <input type="number" name="" v-model="money">
+        </div>
+        <div class="buttons">
+            <div class="longBtn" @click="submit" tapmode>确认支付</div>
+        </div>
+        <div class="select">
+          <i @click="isAgree = !isAgree" tapmode class="ali-iconfont icon-xuanzhong" :class="[{green: isAgree}, {white: !isAgree}]"></i>
+          <span onclick="openArticle()" tapmode >我同意《服务条款》和《隐私权相关政策》</span>
+        </div>
+      </div>
+    </div>
+</body>
+<script src="../../script/api.js"></script>
+<script src="../../script/vue.min.js"></script>
+<script src="../../script/fastclick.js"></script>
+<script src="../../script/app.js"></script>
+<script>
+    window.addEventListener('load', function() {
+        FastClick.attach(document.querySelector('.buttons'));
+        FastClick.attach(document.querySelector('.select'));
+    }, false);
+    apiready = function() {
+        api.parseTapmode();
+        // vue 控制
+        var app = new Vue({
+            el: '#app',
+            data: {
+                money: '',
+                isAgree: false,
+                params: {},
+            },
+            methods: {
+                submit: function(){
+                    var that = this;
+                    if(!this.money){
+                        $app.toast('请输入推广金额')
+                        return;
+                    }
+                    if(!this.isAgree){
+                        $app.toast('请勾选我同意')
+                        return;
+                    }
+                    $app.ajax({
+                        url: $app.apiUrl.isSetPayPass
+                    }).then(function(resp){
+                        if(resp.data.is_set_pay_password){
+                            api.prompt({
+                                type:'password',
+                                title: '请输入支付密码',
+                                buttons: ['确定', '取消']
+                            }, function(ret, err){
+                                if(ret.buttonIndex == 1 && ret.text){
+                                    $app.ajax({
+                                        url: $app.apiUrl.shopPromotionAdd,
+                                        data: {
+                                            money: that.money,
+                                            pay_password: ret.text
+                                        }
+                                    }).then(function(resp){
+                                        $app.toast(resp.msg);
+                                        api.sendEvent({
+                                            name: 'upateShopPromotions',
+                                        });
+                                        setTimeout(function(){
+                                            api.closeWin()
+                                        }, 500)
+                                    })
+                                }
+                            });
+                            $app.ajax({
+                                url: $app.apiUrl.shopPromotionAdd,
+                                data: {
+                                    money: this.money
+                                }
+                            })
+                        }else{
+                            $app.openWin({
+                                name: 'BarHomeSettingPay',
+                                pageParam: {
+                                    type: app.$data.isSetPayPass
+                                }
+                            })
+                        }
+                    })
+                }
+            },
+            mounted: function(){
+                var that = this;
+                $app.ajax({
+                    url: $app.apiUrl.systemParams,
+                    data: {
+                        type: 'shop_promotion'
+                    }
+                }).then(function(resp) {
+                    that.params = resp.data;
+                })
+            }
+        });
+    };
+    function openArticle(){
+      $app.openWin({
+        name:'BarHelpArticle',
+        pageParam: {
+            type: 'shopPromotionProvision'
+        }
+      })
+    }
+</script>
+
+</html>

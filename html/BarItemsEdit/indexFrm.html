@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/aui.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/aui-skin.css" />
+    <style media="screen">
+        .app {
+            font-size: 13px;
+        }
+
+        .aui-list {
+            margin-top: 8px;
+        }
+
+        .aui-list .r-icon {
+            font-size: 12px !important;
+        }
+
+        .aui-list-item-right {
+            text-align: right;
+        }
+
+        .aui-list input.input {
+            width: 70%;
+            font-size: 14px;
+            text-align: right !important;
+            display: inline !important;
+        }
+
+        .item-title-box {
+            display: flex;
+        }
+
+        .item-title-box .item-title {
+            flex: 80px 0 0;
+            line-height: 40px
+        }
+
+        .item-title-box .item-name {
+            flex: 1;
+            margin-right: 15px;
+            font-size: 12px;
+            color: #666;
+            text-align: right;
+        }
+
+        .upimages {
+            padding: 0 15px 15px 15px;
+            background: #fff;
+            display: flex;
+        }
+
+        .upimages .images {
+            flex: 50px 0 0;
+            width: 50px;
+            height: 50px;
+            margin-right: 10px;
+            background: #fff;
+            position: relative;
+        }
+
+        .upimages .add {
+            flex: 50px 0 0;
+            width: 48px;
+            height: 48px;
+            text-align: center;
+            line-height: 48px;
+            border: 1px #fff dashed;
+        }
+
+        .upimages .badge {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: #777;
+            color: #fff;
+            position: absolute;
+            top: -7px;
+            right: -7px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .upimages .badge i {
+            font-size: 10px;
+        }
+
+        .describe {
+            background: #fff;
+            padding: 0 15px 15px 15px;
+        }
+
+        .describe textarea {
+            font-size: 13px;
+            height: 120px;
+        }
+
+        .buttons {
+            padding: 20px;
+        }
+
+        .buttons .longBtn {
+            height: 50px;
+            font-size: 15px;
+            background: -webkit-linear-gradient(left, #6cdaac 50%, #5fcbcc);
+            color: #fff;
+            text-align: center;
+            line-height: 50px;
+            border-radius: 50px;
+            margin-bottom: 25px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app" class="app">
+        <ul class="aui-list aui-list-noborder aui-list-in">
+            <li class="aui-list-item" tapmde @click="goSelectCategory">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-title">商品分类</div>
+                    <div class="aui-list-item-right">
+                        <span v-if="!cates.length">
+                            <span v-if="goodsInfo.id" v-text="goodsInfo.goods_cate_name"></span>
+                            <span v-else>请选择</span>
+                        </span>
+                        <span v-else-if="cates.length">顶级分类</span>
+                        <span v-for="cate in cates">
+                          <i class="r-icon aui-iconfont aui-icon-right"></i>
+                          <span v-text="cate.name"></span>
+                        </span>
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <ul class="aui-list aui-list-noborder aui-list-in">
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-title">商品缩略图</div>
+                </div>
+            </li>
+        </ul>
+        <ul class="upimages">
+            <li class="images" v-if="goodsInfo.thum">
+                <img :src="goodsInfo.thum" alt="">
+                <div class="badge" tapmde @click="deleteImage">
+                    <i class="aui-iconfont aui-icon-close"></i>
+                </div>
+            </li>
+            <li class="add" tapmde @click="addImage" v-if="!goodsInfo.thum">
+                <i class="ali-iconfont icon-tianjiatupian" style="font-size:30px;color:#777"></i>
+            </li>
+        </ul>
+        <ul class="aui-list aui-list-noborder aui-list-in">
+            <li class="aui-list-item">
+                <div class="item-title-box">
+                    <div class="item-title">商品名称</div>
+                    <textarea class="item-name" rows="8" cols="80" v-model="goodsInfo.name" placeholder="输入商品名称"></textarea>
+                </div>
+            </li>
+            <li class="aui-list-item">
+                <div class="item-title-box">
+                    <div class="item-title">商品简介</div>
+                    <textarea class="item-name" rows="8" cols="80" v-model="goodsInfo.intro" placeholder="输入商品简介"></textarea>
+                </div>
+            </li>
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner aui-list-item-arrow" tapmde @click="selectSpecs" >
+                    <div class="aui-list-item-title">商品规格设置</div>
+                    <div class="aui-list-item-right" v-text="goodsInfo.spec_info.length?'已设置（点击修改）':'去设置（无规格可忽略）'"></div>
+                </div>
+            </li>
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-title">商品价格(元)</div>
+                    <div class="aui-list-item-right">
+                        <input class="input" type="number" v-model="goodsInfo.sell_price" placeholder="请输入商品价格">
+                    </div>
+                </div>
+            </li>
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-title">商品总库存(件)</div>
+                    <div class="aui-list-item-right">
+                        <input class="input" type="number" v-model="goodsInfo.stock" pattern="[0-9]*" placeholder="请输入总库存">
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <ul class="aui-list aui-list-noborder aui-list-in">
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-title">商品相册</div>
+                    <div class="aui-list-item-right"><span v-text="goodsInfo.imgs.length"></span>/5</div>
+                </div>
+            </li>
+        </ul>
+        <ul class="upimages">
+            <li class="images" v-for="(img,i) in goodsInfo.imgs">
+                <img :src="img" alt="">
+                <div class="badge" tapmde @click="deleteImages(i)">
+                    <i class="aui-iconfont aui-icon-close"></i>
+                </div>
+            </li>
+            <li class="add" tapmde @click="addImages" v-if="goodsInfo.imgs.length<5">
+                <i class="ali-iconfont icon-tianjiatupian" style="font-size:30px;color:#777"></i>
+            </li>
+        </ul>
+        <ul class="aui-list aui-list-noborder aui-list-in">
+            <li class="aui-list-item">
+                <div class="aui-list-item-inner">
+                    <div class="aui-list-item-title">商品描述</div>
+                </div>
+            </li>
+        </ul>
+        <div class="describe">
+            <textarea name="name" rows="8" cols="150" v-model="goodsInfo.desc" placeholder="输入描述"></textarea>
+        </div>
+        <div class="buttons">
+            <div class="longBtn" tapmde @click="save">上架/发布</div>
+        </div>
+    </div>
+</body>
+<script src="../../script/api.js"></script>
+<script src="../../script/vue.min.js"></script>
+<script src="../../script/fastclick.js"></script>
+<script src="../../script/app.js"></script>
+<script>
+    apiready = function() {
+        api.parseTapmode();
+        // vue 控制
+        var app = new Vue({
+            el: '#app',
+            data: {
+                goodsInfo: {
+                    name: '',
+                    thum: '',
+                    intro: '',
+                    desc: '',
+                    status: 1,
+                    stock: '',
+                    weight: 0,
+                    sell_price: '',
+                    red_price: 0,
+                    cost_price: 0,
+                    market_price: 0,
+                    sell_num: 0,
+                    click_num: 0,
+                    collect_num: 0,
+                    sort: 0,
+                    is_top: false,
+                    is_virtual: false,
+                    goods_no: '',
+                    goods_code: '',
+                    tags: [],
+                    imgs: [],
+                    freight_template_id: 0,
+                    spec_info: [],
+                    spec_group_info: [],
+                    goods_cate_id: 0,
+
+                },
+                // 辅助
+                cates: [],
+            },
+            methods: {
+                deleteImage: function() {
+                    var that = this;
+                    api.confirm({
+                        title: '提示',
+                        msg: '确定要删除缩略图吗？',
+                        buttons: ['确定', '取消']
+                    }, function(ret, err) {
+                        if (ret.buttonIndex == 1) {
+                            that.goodsInfo.thum = '';
+                        }
+                    });
+                },
+                deleteImages: function(i) {
+                    var that = this;
+                    api.confirm({
+                        title: '提示',
+                        msg: '确定要删除缩略图吗？',
+                        buttons: ['确定', '取消']
+                    }, function(ret, err) {
+                        if (ret.buttonIndex == 1) {
+                            that.goodsInfo.imgs.splice(i, 1);
+                        }
+                    });
+                },
+                addImages: function() {
+                    var that = this
+                    that._getPic({
+                        callback: function(ret) {
+                            that.goodsInfo.imgs.push(ret.data.host_file_path)
+                        }
+                    })
+                },
+                addImage: function() {
+                    var that = this
+                    that._getPic({
+                        callback: function(ret) {
+                            that.goodsInfo.thum = ret.data.host_file_path;
+                        }
+                    })
+                },
+                _getPic: function(options) {
+                    var that = this
+                    api.actionSheet({
+                        cancelTitle: '取消',
+                        buttons: ['拍照', '图库']
+                    }, function(ret, err) {
+                        var index = ['', 'camera', 'library'];
+                        if (ret.buttonIndex == 3) {
+                            return
+                        }
+                        api.getPicture({
+                            sourceType: index[ret.buttonIndex],
+                            encodingType: 'jpg',
+                            mediaValue: 'pic',
+                            destinationType: 'url',
+                            allowEdit: true,
+                            quality: 50,
+                            saveToPhotoAlbum: false
+                        }, function(ret, err) {
+                            if (ret) {
+                                $app.ajax({
+                                    url: $app.apiUrl.uploadFile,
+                                    type: 'files',
+                                    data: {
+                                        file: ret.data
+                                    },
+                                    values: {
+                                        save_path: '/public/upload/goods_images/',
+                                        is_rename: 1
+                                    }
+                                }).then(function(ret) {
+                                    options.callback(ret)
+                                })
+                            }
+                        });
+                    });
+                },
+                goSelectCategory: function() {
+                    var that = this;
+                    $app.openWin({
+                        name: 'BarItemsAdd',
+                        pageParam: {
+                            cates: that.cates
+                        }
+                    })
+                },
+                selectSpecs: function() {
+                    $app.openWin({
+                        name: 'BarItemSpecSelect',
+                        pageParam: {
+                            content: this.goodsInfo.spec_info,
+                            spec_group_info: this.goodsInfo.spec_group_info
+                        }
+                    })
+                },
+                save: function() {
+                    var that = this;
+                    if (!that.goodsInfo.name) {
+                        $app.toast('请填写商品名称');
+                        return;
+                    }
+                    if (!this.goodsInfo.goods_cate_id) {
+                        $app.toast('请选择商品分类');
+                        return;
+                    }
+                    if (!this.goodsInfo.sell_price) {
+                        $app.toast('请填写商品价格');
+                        return;
+                    }
+                    if (!this.goodsInfo.thum) {
+                        $app.toast('请上传商品缩略图');
+                        return;
+                    }
+                    if (!this.goodsInfo.imgs.length) {
+                        $app.toast('请上传商品图集');
+                        return;
+                    }
+                    var url = this.goodsInfo.id ? $app.apiUrl.goodsUpdate : $app.apiUrl.goodsSave;
+                    $app.ajax({
+                        url: url,
+                        data: that.goodsInfo
+                    }).then(function(ret) {
+                        $app.toast(ret.msg);
+                        $api.rmStorage('specsGroup');
+                        api.sendEvent({
+                            name: 'updateGoodsList',
+                        });
+                        setTimeout(function() {
+                            api.closeWin();
+                        }, 500)
+                    })
+                }
+            },
+            mounted: function(){
+                if(api.pageParam.goods){
+                    this.goodsInfo = api.pageParam.goods;
+                }
+            }
+        });
+        api.addEventListener({
+            name: 'getCates'
+        }, function(ret) {
+            app.$data.cates = ret.value.cates;
+            app.$data.goodsInfo.goods_cate_id = ret.value.cates[ret.value.cates.length - 1].id;
+        });
+        api.addEventListener({
+            name: 'finishSelectSpec'
+        }, function(ret, err){
+            app.$data.goodsInfo.spec_info = ret.value.content;
+            app.$data.goodsInfo.spec_group_info = ret.value.spec_group_info;
+        });
+    };
+</script>
+
+</html>

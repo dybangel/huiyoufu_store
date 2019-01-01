@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/aui.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/aui-skin.css" />
+    <style media="screen">
+        .app {
+            font-size: 13px;
+        }
+
+        #nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 999;
+        }
+
+        .end-color {
+            color: #b5b5b5
+        }
+
+        .start-color {
+            color: #5fcbcc
+        }
+
+        .way-color {
+            color: #6595ff
+        }
+
+        .end {
+            border-left: 3px solid #b5b5b5;
+        }
+
+        .start {
+            border-left: 3px solid #5fcbcc;
+        }
+
+        .way {
+            border-left: 3px solid #6595ff;
+        }
+
+        .list {
+            background: #fff;
+            border-radius: 10px;
+            margin: 10px;
+            padding: 15px;
+        }
+
+        .list .title {
+            display: flex;
+        }
+
+        .list .title .text {
+            flex: 1;
+            font-size: 15px;
+            font-weight: 700;
+            line-height: 30px;
+        }
+
+        .list .title .status {
+            flex: 50px 0 0;
+            line-height: 30px;
+        }
+
+        .list .time {
+            line-height: 30px;
+        }
+
+        .list .ject {
+            margin-left: 25px;
+        }
+
+        .list .ject li {
+            line-height: 25px;
+            list-style-type: disc;
+        }
+
+        .list .ject li span {
+            color: #333;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app" class="app">
+        <!-- 什么都没有 -->
+        <div v-if="haveNoData" class="aui-col-xs-12 aui-text-center" style="margin-top:30%;">
+            <img src="../../image/no_content.png" style="width:18%;margin:0 auto;">
+            <h5 style="margin-top:1rem;" class="aui-font-size-14">啊哦,这里什么都没有~</h5>
+        </div>
+        <div v-else class="list" :class="[{start : item.full_status == 1}, {way: item.full_status == 2}, {end: item.full_status == 3}]" v-for="(item, key) in list" :key="key" @click="goDetail(item)">
+            <div class="title">
+                <div class="text" v-text="item.name"></div>
+                <div class="status start-color" v-if="item.full_status == 1">待开始</div>
+                <div class="status way-color" v-else-if="item.full_status == 2">进行中</div>
+                <div class="status end-color" v-else-if="item.full_status == 3">已结束</div>
+            </div>
+            <div class="time">开始时间：
+                <span v-text="item.begin_time"></span></div>
+            <div class="time">结束时间：
+                <span v-text="item.end_time"></span></div>
+            <ul class="ject" :class="[{'start-color' : item.full_status == 1}, {'way-color': item.full_status == 2}, {'end-color': item.full_status == 3}]">
+                <li v-for="(rule, rKey) in item.rule_info" :key="rKey"><span v-text="'满' + rule.full_money +'减'+ rule.reduce_money +'元'"></span></li>
+            </ul>
+        </div>
+    </div>
+</body>
+<script src="../../script/api.js"></script>
+<script src="../../script/vue.min.js"></script>
+<script src="../../script/fastclick.js"></script>
+<script src="../../script/app.js"></script>
+<script>
+    $app.ready();
+    var page = 1;
+    apiready = function() {
+        api.parseTapmode();
+        // vue 控制
+        var app = new Vue({
+            el: '#app',
+            data: {
+                list: [],
+                haveNoData: false,
+            },
+            methods: {
+                goDetail: function(item){
+                    $app.openWin({
+                        name: 'BarHelpMinusAdd',
+                        pageParam: {
+                            data: item
+                        }
+                    })
+                },
+                getData: function() {
+                    var that = this;
+                    $app.ajax({
+                        url: $app.apiUrl.fullActivities,
+                        data:{
+                            full_status: api.pageParam.fullStatus
+                        },
+                        headers: {
+                            'page-num': page,
+                            'page-limit': 10
+                        }
+                    }).then(function(resp) {
+                        if(resp.data.length == 0 && page == 1){
+                            that.haveNoData = true;
+                        }else{
+                            that.haveNoData = false;
+                        }
+                        page++;
+                        that.list = that.list.concat(resp.data);
+                    })
+                }
+            },
+            mounted: function() {
+                this.getData();
+            }
+        });
+
+        api.setRefreshHeaderInfo({
+            bgColor: '#fff',
+        }, function(ret, err) {
+            page = 1;
+            app.list = [];
+            app.getData();
+        });
+
+        api.addEventListener({
+            name: 'scrolltobottom'
+        }, function(ret, err) {
+            app.getData();
+        });
+
+        api.addEventListener({
+            name: 'updateFullActivities'
+        }, function(ret, err){
+            page = 1;
+            app.list = [];
+            app.getData();
+        });
+
+    };
+</script>
+
+</html>

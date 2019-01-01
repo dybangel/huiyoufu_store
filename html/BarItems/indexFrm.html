@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/aui.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/aui-skin.css" />
+    <style media="screen">
+        .lists {
+            padding: 5px;
+            display: flex;
+            flex-wrap: wrap;
+            color: #fff;
+        }
+
+        .lists .list {
+            padding: 5px;
+            flex: 50% 0 0;
+            position: relative;
+        }
+
+        .lists .list .info {
+            width: 100%;
+            height: 165px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .lists .list .info.left {
+            background: #56dadb;
+        }
+
+        .lists .list .info.right {
+            background: #76e1b4;
+        }
+
+        .lists .list .info .flex {
+            text-align: center;
+        }
+
+        .lists .list .info .flex i {
+            font-size: 40px !important;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app" class="app">
+        <div class="lists">
+            <div class="list" id="only-list-hook" LJ="BarItemsCategoryEdit">
+                <div class="info left" tapmode @click="openEdit">
+                    <div class="flex">
+                        <div class="icon"><i class="ali-iconfont icon-tianjiashangpin"></i></div>
+                        <div class="text">添加动态</div>
+                    </div>
+                </div>
+            </div>
+            <div class="list">
+                <div class="info right" tapmode @click="open('BarItemsList')">
+                    <div class="flex">
+                        <div class="icon"><i class="ali-iconfont icon-shangpinliebiao"></i></div>
+                        <div class="text">活动管理</div>
+                    </div>
+                </div>
+            </div>
+            <div class="list">
+                <div class="info left" tapmode @click="open('BarItemsPutaway')">
+                    <div class="flex">
+                        <div class="icon"><i class="ali-iconfont icon-shangpinshangjia"></i></div>
+                        <div class="text">预定管理</div>
+                    </div>
+                </div>
+            </div>
+            <div class="list">
+                <div class="info right" tapmode @click="open('BarItemsCategory')">
+                    <div class="flex">
+                        <div class="icon"><i class="ali-iconfont icon-fenleiguanli"></i></div>
+                        <div class="text">分类管理</div>
+                    </div>
+                </div>
+            </div>
+            <div class="list">
+                <div class="info left" tapmode @click="open('BarItemsComment')">
+                    <div class="flex">
+                        <div class="icon"><i class="ali-iconfont icon-icon_pinglunguanli"></i></div>
+                        <div class="text">评论管理</div>
+                    </div>
+                </div>
+            </div>
+            <div class="list">
+                <div class="info right" tapmode @click="open('BarItemsSpecs')">
+                    <div class="flex">
+                        <div class="icon"><i class="ali-iconfont icon-guige"></i></div>
+                        <div class="text">规格设置</div>
+                    </div>
+                </div>
+            </div>
+            <div class="list" LJ="BarItemsMessage">
+                <div class="info left"  >
+                    <div class="flex">
+                        <div class="icon"><i class="ali-iconfont icon-liaotian"></i></div>
+                        <div class="text">聊天管理</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<!--<script src="../../script/api.js"></script>
+<script src="../../script/vue.min.js"></script>
+<script src="../../script/fastclick.js"></script>
+<script src="../../script/app.js"></script>-->
+<script src="../../js/mui.js"></script>
+<script>
+	//mui.init();
+	//alert('a');
+	mui('body').on('tap','.list', function(e) {
+	 var lj=	this.getAttribute("LJ");
+	 alert(lj);
+	// openframe(lj);
+	var subpage_style = {
+				top: '0px',
+				bottom: '0px'
+			};
+	var self = plus.webview.currentWebview();
+	var sub = plus.webview.create('../BarItemsMessage/indexfrm.html', '../BarItemsMessage/indexfrm.html', subpage_style);
+		self.append(sub);
+	plus.webview.show('../BarItemsMessage/indexfrm.html');
+	});
+
+function openframe(pageframe){
+	//alert('a');
+	mui.openWindow({  
+    url: '../'+pageframe+'/indexfrm.html',  
+    id:pageframe,  
+    styles: {  
+        top:'0', //新页面顶部位置  
+        bottom:'0', //新页面底部位置  
+        width:'100%', //新页面宽度，默认为100%  
+        height:'100%', //新页面高度，默认为100%  
+       
+    },  
+    extras: {  
+       // ..... //自定义扩展参数，可以用来处理页面间传值  
+    }, 
+    show: {  
+        autoShow: true, //页面loaded事件发生后自动显示，默认为true  
+       // aniShow: animationType, //页面显示动画，默认为”slide-in-right“；  
+       // duration: animationTime //页面动画持续时间，Android平台默认100毫秒，iOS平台默认200毫秒；  
+    },  
+    waiting: {  
+        autoShow: true, //自动显示等待框，默认为true  
+        title: '正在加载...', //等待对话框上显示的提示内容  
+        options: {  
+          //  width: waiting - dialog - widht, //等待框背景区域宽度，默认根据内容自动计算合适宽度  
+           // height: waiting - dialog - height, //等待框背景区域高度，默认根据内容自动计算合适高度  
+           // ......  
+        }  
+    }  
+})  
+}
+
+//  $app.ready()
+//  apiready = function() {
+//      api.parseTapmode();
+//      // 添加 动态计算高度
+//      var appDom = $api.byId('app');
+//      var infoDoms = $api.domAll(appDom, '.info');
+//      var infoDom = $api.first(appDom, '.info');
+//      var infoDomPos = $api.offset(infoDom);
+//      for (var i = 0; i < infoDoms.length; i++) {
+//          $api.css(infoDoms[i], 'height:' + infoDomPos.w * 0.8 + 'px');
+//      }
+//      var app = new Vue({
+//          el: '#app',
+//          data: {
+//
+//          },
+//          computed: {
+//
+//          },
+//          methods: {
+//              open: function(name) {
+//                  $app.openWin({
+//                      name: name
+//                  })
+//              },
+//              openEdit: function() {
+//                  $app.openWin({
+//                      name: 'BarItemsEdit',
+//                      pageParam: {
+//                          title: '添加商品信息'
+//                      }
+//                  })
+//              }
+//          },
+//      });
+//  };
+</script>
+
+</html>

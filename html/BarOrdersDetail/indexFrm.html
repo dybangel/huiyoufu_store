@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/aui.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/aui-skin.css" />
+    <link rel="stylesheet" type="text/css" href="./indexFrm.css" />
+</head>
+
+<body>
+    <div id="app" class="app">
+        <div class="flows-box">
+          <div class="inbox">
+            <div class="flows">
+              <div class="flow" id="flow-hook">
+                <div class="inde">
+                  <div class="dot g"></div>
+                  <div class="text">提交订单</div>
+                </div>
+              </div>
+              <div class="flow">
+                <div class="inde">
+                  <div class="dot g"></div>
+                  <div class="text">卖家付款</div>
+                </div>
+              </div>
+              <div class="flow">
+                <div class="inde">
+                  <div class="dot"></div>
+                  <div class="text">商家发货</div>
+                </div>
+              </div>
+              <div class="flow">
+                <div class="inde">
+                  <div class="dot"></div>
+                  <div class="text">骑手接单</div>
+                </div>
+              </div>
+              <div class="flow">
+                <div class="inde">
+                  <div class="dot"></div>
+                  <div class="text">确认收货</div>
+                </div>
+              </div>
+            </div>
+            <div class="lines" id="lines-hook">
+              <div class="status">
+                <div class="info">
+                  <div class="text"><span>待付款</span></div>
+                </div>
+                <div class="info">
+                  <div class="text"><span>待发货</span></div>
+                </div>
+                <div class="info">
+                  <div class="text"><span>待接单</span></div>
+                </div>
+                <div class="info">
+                  <div class="text"><span>待确认</span></div>
+                </div>
+              </div>
+
+              <div class="line line-default"></div>
+              <div class="line line-progress"></div>
+          </div>
+          </div>
+          <div class="finshed-box">
+            <div class="aui-content aui-margin-b-15">
+              <ul class="aui-list aui-list-in">
+                  <li class="aui-list-item aui-list-item-middle">
+                      <div class="aui-list-item-inner aui-list-item-arrow">
+                          <div class="aui-list-item-title">查看用户评价</div>
+                      </div>
+                  </li>
+                  <li class="aui-list-item">
+                      <div class="aui-list-item-inner aui-list-item-arrow">
+                          <div class="aui-list-item-title">已经入账: <span class="red">126.00</span></div>
+                      </div>
+                  </li>
+              </ul>
+          </div>
+          <div class="refund">
+            <div class="aui-row text">
+                <div class="aui-col-xs-12">用户申请退款</div>
+            </div>
+            <div class="btns">
+                <div class="flex">
+                  <div class="btn btn-default">拒绝退款</div>
+                </div>
+                <div class="flex">
+                  <div class="btn btn-green">确定退款</div>
+                </div>
+            </div>
+          </div>
+        </div>
+        </div>
+        <div class="address-info">
+          <div class="order">
+            <div class="flex left"><span class="bold">#19</span></div>
+            <div class="flex center">订单时间：2017-10-09 14:40:22</div>
+            <div class="flex right"><span class="bold green">已付款</span></div>
+          </div>
+          <div class="addrss">
+            <div class="icon">
+                <i class="ali-iconfont icon-dizhi1" style="color:#6cdaac;font-size:40px;"></i>
+            </div>
+            <div class="content">
+              <div class="address-text">湖南省长沙市经济开发区 开元路17号 开源鑫贸大楼906室</div>
+              <div class="address-name">韩梅梅 18390916324</div>
+            </div>
+          </div>
+        </div>
+        <div class="send-info">
+          <div class="waited">
+            <div class="icon-title">
+              <i class="ali-iconfont icon-qishou" style="color:#fff"></i>
+              <span>等待骑手接单</span>
+            </div>
+          </div>
+          <div class="actions">
+              <div class="icon">
+                  <i class="ali-iconfont icon-jiedanweiquhuo" style="color:#6cdaac;"></i>
+              </div>
+              <div class="info-">
+                  <div class="title">李雷 18390916324</div>
+                  <div class="price">骑手已接单，正在取货中</div>
+              </div>
+              <div class="tel">
+                  <div class="oval">
+                    <i class="ali-iconfont icon-dianhua" style="color:#fff"></i>
+                  </div>
+              </div>
+          </div>
+        </div>
+        <div class="item-info">
+          <div class="item" tapmode @click="">
+              <div class="left">
+                  <div class="img"></div>
+              </div>
+              <div class="right">
+                  <div class="title">BURBERRY/博柏利短袖马术风格纹棉轻盈格纹哈林顿外套.博柏利短袖马术</div>
+                  <div class="price aui-row">
+                    <div class="aui-col-xs-8 red">￥150.00</div>
+                    <div class="aui-col-xs-4 num">x1</div>
+                  </div>
+              </div>
+          </div>
+          <div class="money">
+            <div class="aui-row">
+                <div class="aui-col-xs-8 title">商品金额</div>
+                <div class="aui-col-xs-4 number">￥150.00</div>
+            </div>
+            <div class="aui-row">
+                <div class="aui-col-xs-8 title">店铺满减（满100-10）</div>
+                <div class="aui-col-xs-4 number">-¥10.00</div>
+            </div>
+            <div class="aui-row">
+                <div class="aui-col-xs-8 title">优惠券</div>
+                <div class="aui-col-xs-4 number">-¥10.00</div>
+            </div>
+            <div class="aui-row">
+                <div class="aui-col-xs-8 title">配送金额</div>
+                <div class="aui-col-xs-4 number">¥9.00</div>
+            </div>
+            <div class="aui-row">
+                <div class="aui-col-xs-8 title">预计收入</div>
+                <div class="aui-col-xs-4 number red">¥126.00</div>
+            </div>
+          </div>
+        </div>
+        <div class="sales-info">
+          <div class="aui-row text">
+              <div class="aui-col-xs-3">买家留言:</div>
+              <div class="aui-col-xs-9">没有留言时,此栏目不显示</div>
+          </div>
+          <div class="btns">
+              <div class="btn btn-default">拒绝</div>
+              <div class="btn btn-green">接单</div>
+              <div class="btn btn-green">去发货</div>
+              <div class="btn btn-green">去处理</div>
+          </div>
+        </div>
+        <div class="order-number">
+          <div class="title">订单编号：2017198181718171817181</div>
+          <div class="title">创建时间：2017-03-12 10:23:22</div>
+        </div>
+    </div>
+</body>
+<script src="../../script/api.js"></script>
+<script src="../../script/vue.min.js"></script>
+<script src="../../script/fastclick.js"></script>
+<script src="../../script/app.js"></script>
+<script>
+    apiready = function() {
+        $app.ready()
+        api.parseTapmode();
+
+        var lines = $api.byId('lines-hook');
+        var lineP = $api.domAll(lines, '.line');
+        var flowPos = $api.offset($api.byId('flow-hook'));
+        $api.css(lines, 'left:'+flowPos.w/2+'px;right:'+flowPos.w/2+'px;');
+
+        $api.css(lineP[0], 'top:'+(flowPos.h/2+7)+'px;');
+        $api.css(lineP[1], 'top:'+(flowPos.h/2+7)+'px;');
+            // vue 控制
+        var app = new Vue({
+            el: '#app',
+            data: {
+
+            },
+            computed: {
+
+            },
+            methods: {
+
+            },
+            watch: {
+
+            }
+        });
+    };
+</script>
+
+</html>

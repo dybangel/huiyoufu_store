@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/aui.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/aui-skin.css" />
+    <style media="screen">
+        .app{
+          font-size: 13px;
+        }
+        .aui-list {
+            margin-top: 8px;
+        }
+        .aui-list .r-icon{
+          font-size: 12px !important;
+        }
+        .aui-list-item-right{
+          text-align: right;
+        }
+        .aui-list input.input{
+          width: 70%;
+          font-size: 14px;
+          text-align: right !important;
+          display: inline !important;
+        }
+        .item-title-box{
+          display: flex;
+        }
+        .item-title-box .item-title{
+          flex: 80px 0 0;
+          line-height: 40px
+        }
+        .item-title-box .item-name{
+          flex: 1;
+          margin-right: 15px;
+          font-size: 12px;
+          color: #666;
+          text-align: right;
+        }
+        .specs-title{
+          font-size: 12px;
+          text-align: right;
+        }
+        .list{
+          background: #fff;
+          margin-top: 10px;
+          padding: 0 10px 0px 10px;
+        }
+        .list .title{
+          display: flex;
+          line-height: 50px;
+        }
+        .list .title .name{
+          flex: 1;
+          text-align: left;
+          font-size: 15px;
+        }
+        .list .title .icon{
+          flex: 1;
+          text-align: right;
+        }
+        .list .options{
+          line-height: 25px;
+        }
+        .list .options .option {
+          display: inline-block;
+          height: 30px;
+          margin-right: 10px;
+          margin-bottom: 10px;
+          position: relative;
+        }
+        .list .options .option span {
+          border: 1px solid #e5e5e5;
+          display: inline-block;
+          width: 85px;
+          min-width: 85px;
+          border-radius: 3px;
+          height:28px;
+          line-height: 28px;
+          font-size: 13px;
+          text-align: center;
+        }
+        .list .options .add {
+          background: #6cdaab;
+          color: #fff;
+          display: inline-flex;
+          border-radius: 50%;
+          width: 28px;
+          height:28px;
+          margin-bottom: 10px;
+          justify-content: center;
+          align-items: center;
+        }
+        .list .options .add i{
+          color: #fff !important;
+          font-size: 12px;
+        }
+        .list .options .badge{
+          width: 14px;
+          height: 14px;
+          border-radius: 50%;
+          background: #777;
+          color: #fff;
+          position: absolute;
+          top:-7px;
+          right: -7px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+        .list .options .badge i{
+          font-size: 10px;
+        }
+        .add-list{
+          padding: 10px;
+          text-align: center;
+        }
+        .add-list .add {
+
+          background: #6cdaab;
+          color: #fff;
+          display: inline-block;
+          width: 120px;
+          border-radius: 3px;
+          height:40px;
+          line-height: 40px;
+          font-size: 13px;
+          text-align: center;
+        }
+        .add-list .add i{
+          color: #fff !important;
+        }
+        .buttons{
+          padding: 20px;
+        }
+        .buttons .longBtn {
+            height: 50px;
+            background: -webkit-linear-gradient(left, #6cdaac 50%, #5fcbcc);
+            color: #fff;
+            text-align: center;
+            line-height: 50px;
+            border-radius: 50px;
+            margin-bottom: 25px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app" class="app">
+      <ul class="aui-list aui-list-in">
+          <li class="aui-list-item" tapmde>
+              <div class="aui-list-item-inner">
+                  <div class="aui-list-item-title">模板名称</div>
+                  <div class="aui-list-item-right">
+                    <input class="specs-title" type="text" v-model="specsData.name" placeholder="输入模板名称">
+                  </div>
+              </div>
+          </li>
+          <li class="aui-list-item" tapmde>
+              <div class="aui-list-item-inner">
+                  <div class="aui-list-item-title">模板排序</div>
+                  <div class="aui-list-item-right">
+                    <input class="specs-title" type="number" v-model="specsData.sort" pattern="[0-9]*" placeholder="数值越大越在上">
+                  </div>
+              </div>
+          </li>
+          <li class="aui-list-item">
+              <div class="item-title-box">
+                  <div class="item-title">模板描述</div>
+                  <textarea class="item-name" rows="8" cols="80" v-model="specsData.intro" placeholder="输入模板描述内容"></textarea>
+              </div>
+          </li>
+      </ul>
+      <div class="list" v-for="(specs,index) in specsData.content" v-key="specs">
+        <div class="title">
+          <input class="name" type="text" placeholder="请输入规格名称" v-model="specs.name">
+          <div class="icon">
+            <i class="aui-iconfont aui-icon-close" tapmde @click="minusList(index)"></i>
+          </div>
+        </div>
+        <ul class="options">
+          <li class="option" v-for="(option,i) in specs.options" v-key="option">
+            <span type="text" @click="editOption(index,i)" v-text="option"></span>
+            <div class="badge">
+              <i class="aui-iconfont aui-icon-close" tapmde @click="minusOption(index,i)"></i>
+            </div>
+          </li>
+          <li class="add" tapmde @click="editOption(index)">
+            <i class="aui-iconfont aui-icon-plus"></i>
+          </li>
+        </ul>
+      </div>
+      <div class="add-list">
+        <div class="add" tapmde @click="addList">
+          <i class="aui-iconfont aui-icon-plus"></i> 添加规格
+        </div>
+      </div>
+      <div class="buttons" v-if="deleteShow">
+          <div class="longBtn" tapmde @click="deleteSpecs">删除规格模板</div>
+      </div>
+    </div>
+</body>
+<script src="../../script/api.js"></script>
+<script src="../../script/vue.min.js"></script>
+<script src="../../script/fastclick.js"></script>
+<script src="../../script/app.js"></script>
+<script>
+    apiready = function() {
+        api.parseTapmode();
+        // vue 控制
+        var app = new Vue({
+            el: '#app',
+            data: {
+              deleteShow:false,
+              specsData:{
+                name:'',
+                intro:'',
+                sort:'',
+                content:[]
+              }
+            },
+            computed: {
+
+            },
+            methods: {
+                deleteSpecs:function(){
+                  var that = this;
+                  api.confirm({
+                      title: '提示',
+                      msg: '确定要删除这个规格模板吗？',
+                      buttons: ['确定', '取消']
+                  }, function(ret, err) {
+                    if(ret.buttonIndex == 1){
+                      $app.ajax({
+                        url:$app.apiUrl.specsDelete,
+                        data:{
+                          id:that.specsData.id
+                        }
+                      }).then(function(ret){
+                        $app.toast(ret.msg)
+                        api.sendEvent({
+                            name: 'refreshSpecs'
+                        });
+                        setTimeout(function() {
+                            api.closeWin();
+                        }, 1000)
+                      })
+                    }
+                  });
+                },
+                addList:function(){
+                  var that = this;
+                  var listLen = that.specsData.content.length;
+                  var data = {
+                    name:'',
+                    options:[]
+                  }
+                  if(listLen == 0){
+                    that.specsData.content.push(data);
+                  }else if (listLen && that.specsData.content[listLen-1].name && that.specsData.content[listLen-1].options.length){
+                    that.specsData.content.push(data);
+                  }else {
+                    $app.toast('必须先完善上一个规格信息')
+                  }
+                },
+                editOption:function(index,i){
+                  var that = this;
+                  var text = '';
+                  if(i==0 || i){
+                    text = that.specsData.content[index].options[i];
+                  }
+                  api.prompt({
+                      buttons: ['确定', '取消'],
+                      type: 'text',
+                      title: '输入规格项名称',
+                      text: text
+                  }, function(ret, err) {
+                      if (ret.buttonIndex == 1 && ret.text) {
+                        if(i==0 || i){
+                          app.$set(that.specsData.content[index].options,i,ret.text)
+                        }else{
+                          that.specsData.content[index].options.push(ret.text);
+                        }
+                      }
+                  });
+                },
+                minusList:function(id){
+                  var that = this;
+                  api.confirm({
+                      title: '提示',
+                      msg: '确定要删除这个规格吗？',
+                      buttons: ['确定', '取消']
+                  }, function(ret, err) {
+                    if(ret.buttonIndex == 1){
+                      that.specsData.content.splice(id,1)
+                    }
+                  });
+                },
+                minusOption:function(index,i){
+                  var that = this;
+                  api.confirm({
+                      title: '提示',
+                      msg: '确定要删除这个规格项吗？',
+                      buttons: ['确定', '取消']
+                  }, function(ret, err) {
+                    if(ret.buttonIndex == 1){
+                      that.specsData.content[index].options.splice(i,1)
+                    }
+                  });
+                },
+                save:function(){
+                  var that = this;
+                  if(!that.specsData.name){
+                    $app.toast('请输入模板名称');
+                    return;
+                  }
+                  if(!that.specsData.content.length){
+                    $app.toast('请添加规格内容');
+                    return;
+                  }
+                  for(var i=0;i<that.specsData.content.length;i++){
+                    if(!that.specsData.content[i].name || !that.specsData.content[i].options.length){
+                      $app.toast('请完善规格内容，并且删除空的规格项');
+                      return;
+                    }
+                  }
+                  var data = {
+                    name:that.specsData.name,
+                    intro:that.specsData.intro,
+                    sort:that.specsData.sort,
+                    content:that.specsData.content
+                  }
+                  var url;
+                  if(api.pageParam.type == 'edit'){
+                    url = $app.apiUrl.specsUpdate;
+                    data.id = that.specsData.id
+                  }else if (api.pageParam.type == 'add') {
+                    url = $app.apiUrl.specsSave;
+                  }
+                  $app.ajax({
+                    url:url,
+                    data:data
+                  }).then(function(ret){
+                    $app.toast(ret.msg)
+                    api.sendEvent({
+                        name: 'refreshSpecs'
+                    });
+                    setTimeout(function() {
+                        api.closeWin();
+                    }, 1000)
+                  })
+                },
+                readSpecsData:function(id){
+                  var that = this;
+                  $app.ajax({
+                    url:$app.apiUrl.specsRead,
+                    data:{
+                      id:id
+                    }
+                  }).then(function(ret){
+                    that.specsData = ret.data;
+                  })
+                }
+            },
+            watch: {
+
+            },
+            mounted:function(){
+              if(api.pageParam.type == 'edit'){
+                this.deleteShow= true;
+                this.readSpecsData(api.pageParam.id)
+              }
+            }
+        });
+        api.addEventListener({
+            name: 'saveSpecs'
+        }, function(ret, err){
+            app.save();
+        });
+
+    };
+</script>
+
+</html>

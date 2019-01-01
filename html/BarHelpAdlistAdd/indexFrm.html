@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/aui.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/aui-skin.css" />
+    <style media="screen">
+        .app {
+            font-size: 13px;
+        }
+
+        .title {
+            line-height: 30px;
+            padding: 0 10px;
+            background: #fff;
+        }
+
+        .title .left {
+            font-size: 15px;
+        }
+
+        .title .right {
+            float: right;
+        }
+
+        .add-image {
+            background: #ccc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 200px;
+        }
+
+        .add-image2 {
+            background: #fff;
+            overflow: hidden;
+        }
+
+        .add-image2 img {
+            width: 100%;
+        }
+
+        .time {
+            padding: 10px;
+            background: #fff;
+        }
+
+        .time .text {
+            font-size: 14px;
+            line-height: 25px;
+            margin-bottom: 10px;
+        }
+
+        .time .title {
+            border: 1px solid #e5e5e5;
+            margin-bottom: 10px;
+        }
+
+        .time .title .left {
+            font-size: 13px;
+        }
+
+        .time .line {
+            color: #777;
+            line-height: 25px;
+        }
+
+        .ma {
+            margin-top: 10px;
+            line-height: 50px;
+            margin-bottom: 10px;
+        }
+
+        .select {
+            padding: 0 10px;
+            text-align: right;
+            margin-bottom: 10px;
+        }
+
+        .select.green {
+            color: #5fcbcc;
+        }
+
+        .select.white {
+            color: #fff;
+        }
+
+        .buttons {
+            padding: 30px 30px 0 30px;
+        }
+
+        .buttons .longBtn {
+            height: 50px;
+            background: -webkit-linear-gradient(left, #6cdaac 50%, #5fcbcc);
+            color: #fff;
+            text-align: center;
+            line-height: 50px;
+            border-radius: 50px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app" class="app">
+        <div class="title">
+            <span class="left">广告资源</span>
+            <span class="right">图片资源尺寸建议750*400px</span>
+        </div>
+        <div class="add-image" @click="selectMedia" v-if="!data.type">
+            <span class="ali-iconfont icon-circle-plus" style="font-size:40px;color:#fff"></span>
+        </div>
+        <div class="add-image2" v-else-if="data.type == 1">
+            <img :src="data.file" @click="selectMedia">
+        </div>
+        <div class="add-image2" v-else-if="data.type == 2">
+            <img src="../../image/video_bg_update.jpg" @click="selectMedia">
+        </div>
+        <div class="time">
+            <div class="text">选择时间</div>
+            <div class="title" @click="selectTime('begin_time')">
+                <span class="left">选择发布时间</span>
+                <span tapmode class="right" v-text="data.begin_time"></span>
+            </div>
+            <div class="title" tapmode @click="selectTime('end_time')">
+                <span class="left">选择结束时间</span>
+                <span class="right" v-text="data.end_time"></span>
+            </div>
+            <div class="line">说明：审核时间需要3天，发布时间请选择3天以后</div>
+        </div>
+        <div class="title ma">
+            <span class="left">视频每日推广金额</span>
+            <span class="right">￥
+              <span v-text="params.video_per_money"></span>
+            </span>
+        </div>
+        <div class="title ma">
+            <span class="left">图片每日推广金额</span>
+            <span class="right">￥
+              <span v-text="params.img_per_money"></span>
+            </span>
+        </div>
+        <div class="select" :class="[{white: !isAgree},{green: isAgree}]">
+            <i @click="isAgree = !isAgree" tapmode class="ali-iconfont icon-xuanzhong"></i>
+            <span @click="openArticle()" tapmode style="color: #5fcbcc;">我同意《服务条款》和《隐私权相关政策》</span>
+        </div>
+        <div class="buttons">
+            <div class="longBtn" @click="submit">提交</div>
+        </div>
+    </div>
+</body>
+<script src="../../script/api.js"></script>
+<script src="../../script/vue.min.js"></script>
+<script src="../../script/fastclick.js"></script>
+<script src="../../script/app.js"></script>
+<script>
+    $app.ready();
+    var mediaValue = ['', 'pic', 'video'];
+    var photoBrowser;
+    apiready = function() {
+        photoBrowser = api.require("photoBrowser");
+        api.parseTapmode();
+        // vue 控制
+        var app = new Vue({
+            el: '#app',
+            data: {
+                params: {},
+                data: {
+                    begin_time: '',
+                    end_time: '',
+                    type: '',
+                    file: '',
+                },
+                isAgree: false,
+            },
+            methods: {
+                selectTime: function(type) {
+                    var that = this;
+                    $app.selectTime(function(time) {
+                        that.data[type] = time;
+                    })
+                },
+                previewImage: function() {
+                    var that = this;
+                    photoBrowser.open({
+                        images: [this.data.file],
+                        bgColor: 'rgba(0,0,0,0.9)'
+                    }, function(ret, err) {
+                        if (ret) {
+                            if (ret.eventType == 'click') {
+                                photoBrowser.close();
+                            }
+                        } else {
+                            alert(JSON.stringify(err));
+                        }
+                    });
+                },
+                previewVideo: function() {
+                    api.openVideo({
+                        url: this.data.file
+                    });
+                },
+                selectMedia: function() {
+                    var that = this;
+                    api.actionSheet({
+                        title: '请选择广告类型',
+                        buttons: ['图片', '视频']
+                    }, function(ret, err) {
+                        var buttonIndex = ret.buttonIndex;
+                        if (buttonIndex == 1 || buttonIndex == 2) {
+                            api.getPicture({
+                                sourceType: 'library',
+                                encodingType: 'jpg',
+                                mediaValue: mediaValue[ret.buttonIndex],
+                                destinationType: 'url',
+                                allowEdit: false,
+                                quality: 50,
+                                targetWidth: 100,
+                            }, function(ret, err) {
+                                if (ret) {
+                                    if(!ret.data){
+                                        return;
+                                    }
+                                    if (buttonIndex == 2 && ret.duration > 20) {
+                                        $app.toast('视频时长不能超过20秒');
+                                    } else {
+                                        api.showProgress({
+                                            style: 'default',
+                                            animationType: 'fade',
+                                            title: '上传中',
+                                            text: '',
+                                            modal: true
+                                        });
+                                        $app.ajax({
+                                            url: $app.apiUrl.uploadFile,
+                                            type: 'files',
+                                            data: {
+                                                file: ret.data
+                                            },
+                                            values: {
+                                                save_path: $app.config.marketImages,
+                                                is_rename: 1
+                                            }
+                                        }).then(function(ret) {
+                                            $app.toast('上传成功');
+                                            that.data.type = buttonIndex;
+                                            that.data.file = ret.data.host_file_path
+                                        })
+                                    }
+                                }
+                            });
+                        }
+                    });
+                },
+                submit: function() {
+                    var that = this;
+                    if (!this.isAgree) {
+                        $app.toast('请勾选我同意');
+                        return;
+                    }
+                    if (!this.data.begin_time) {
+                        $app.toast('请选择开始时间');
+                        return
+                    }
+                    if (!this.data.begin_time) {
+                        $app.toast('请选择结束时间');
+                        return
+                    }
+                    if (!this.data.type) {
+                        $app.toast('请上传广告资源');
+                        return
+                    }
+                    $app.ajax({
+                        url: $app.apiUrl.adReleaseView,
+                        data: this.data
+                    }).then(function(resp) {
+                        $app.ajax({
+                            url: $app.apiUrl.isSetPayPass
+                        }).then(function(resp){
+                            $app.plog(resp.data)
+                        })
+                        api.prompt({
+                            title: '输入支付密码支付 ¥' + resp.data.money,
+                            type: 'password',
+                            buttons: ['确定', '取消']
+                        }, function(ret, err) {
+                            if (ret.buttonIndex == 1 && ret.text) {
+                                that.data.pay_password = ret.text;
+                                $app.ajax({
+                                    url: $app.apiUrl.adReleaseAdd,
+                                    data: that.data
+                                }).then(function(resp) {
+                                    api.sendEvent({
+                                        name: 'updateAds',
+                                    });
+                                    setTimeout(function() {
+                                        api.closeWin();
+                                    }, 500)
+                                })
+                            }
+                        });
+                    })
+                }
+            },
+            mounted: function() {
+                var that = this;
+                $app.ajax({
+                    url: $app.apiUrl.systemParams,
+                    data: {
+                        type: 'ad_release'
+                    }
+                }).then(function(resp) {
+                    that.params = resp.data;
+                })
+            }
+        });
+    };
+
+    function openArticle() {
+        $app.openWin({
+            name: 'BarHelpArticle',
+            pageParam: {
+                type: 'adProvision'
+            }
+        })
+    }
+</script>
+
+</html>

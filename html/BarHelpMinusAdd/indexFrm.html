@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/aui.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/aui-skin.css" />
+    <style media="screen">
+        body {
+            background: #fff;
+        }
+
+        .app {
+            font-size: 13px;
+            background: #fff;
+        }
+
+        .bg {
+            height: 100px;
+            background: -webkit-linear-gradient(left, #36dbab 60%, #36d6b6);
+        }
+
+        .inputs {
+            margin: 10px;
+            margin-top: -50px;
+            border-radius: 10px;
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0px 2px 9px #ADADAD;
+            margin-bottom: 10px;
+        }
+
+        .add-option {
+            display: flex;
+            margin-bottom: 5px;
+        }
+
+        .add-option .text {
+            flex: 80px 0 0;
+            font-size: 15px;
+            line-height: 30px;
+        }
+
+        .add-option .option {
+            flex: 1;
+            color: #777;
+        }
+
+        .add-option .option .select {
+            border: 1px solid #e6e6e6;
+            border-radius: 5px;
+            height: 30px;
+            line-height: 30px;
+            padding: 0 5px;
+            margin-bottom: 5px;
+            display: flex;
+        }
+
+        .add-option .option .select .name {
+            height: 29px;
+            font-size: 14px;
+        }
+
+        .add-option .option .select .s-time {
+            flex: 2;
+        }
+
+        .add-option .option .select .select-time {
+            flex: 1;
+            text-align: right;
+        }
+
+        .add-option .option .select .select-time span {
+            font-size: 13px;
+        }
+
+        .lists {
+            background: #fff;
+        }
+
+        .lists .list {
+            padding: 30px;
+            border-bottom: 1px solid #e5e5e5;
+        }
+
+        .lists .list .add-option {
+            margin-bottom: 5px;
+        }
+
+        .lists .list .add-option .option {
+            text-align: right;
+        }
+
+        .lists .list .add-option .option .select {
+            display: inline-block;
+            width: 60px;
+            margin: 0 10px;
+            line-height: 25px;
+            font-size: 12px;
+        }
+
+        .buttons {
+            padding: 20px;
+        }
+
+        .buttons .longBtn {
+            height: 50px;
+            background: -webkit-linear-gradient(left, #6cdaac 50%, #5fcbcc);
+            color: #fff;
+            text-align: center;
+            line-height: 50px;
+            border-radius: 50px;
+            margin-bottom: 25px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app" class="app">
+        <div class="bg"></div>
+        <div class="inputs">
+            <div class="add-option">
+                <div class="text">活动名称</div>
+                <div class="option">
+                    <div class="select">
+                        <input type="text" class="name" v-model="data.name" placeholder="请输入活动名称">
+                    </div>
+                </div>
+            </div>
+            <div class="add-option">
+                <div class="text">活动时间</div>
+                <div class="option">
+                    <div class="select" @click="selectTime('begin_time')">
+                        <div class="s-time" v-text="data.begin_time || '开始时间'"></div>
+                        <div class="select-time">请选择 <span class="aui-iconfont aui-icon-right"></span></div>
+                    </div>
+                    <div class="select" @click="selectTime('end_time')">
+                        <div class="s-time" v-text="data.end_time || '结束时间'"></div>
+                        <div class="select-time">请选择 <span class="aui-iconfont aui-icon-right"></span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="lists">
+            <div class="list" v-for="(item, key) in data.rule_info" :key="key">
+                <div class="add-option">
+                    <div class="text">优惠条件</div>
+                    <div class="option">
+                        买家订单满 <input class="select" type="number" v-model="data.rule_info[key].full_money" placeholder="金额"> 元
+                    </div>
+                </div>
+                <div class="add-option">
+                    <div class="text">优惠内容</div>
+                    <div class="option">
+                        减 <input class="select" type="number" v-model="data.rule_info[key].reduce_money" placeholder="金额"> 元
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="buttons">
+            <div class="longBtn" @click="addRuleInfo">添加优惠</div>
+        </div>
+    </div>
+</body>
+<script src="../../script/api.js"></script>
+<script src="../../script/vue.min.js"></script>
+<script src="../../script/fastclick.js"></script>
+<script src="../../script/app.js"></script>
+<script>
+    window.addEventListener('load', function() {
+        FastClick.attach(document.querySelector('.longBtn'));
+    }, false);
+    var app = {};
+    apiready = function() {
+        api.parseTapmode();
+
+        // vue 控制
+        app = new Vue({
+            el: '#app',
+            data: {
+                data: {
+                    name: '',
+                    rule_info: [{
+                        full_money: '',
+                        reduce_money: ''
+                    }],
+                    begin_time: '',
+                    end_time: '',
+                }
+            },
+            methods: {
+                selectTime: function(type) {
+                    var that = this;
+                    $app.selectTime(function(time) {
+                        that.data[type] = time;
+                    })
+                },
+                addRuleInfo: function() {
+                    this.data.rule_info.push({
+                        full_money: '',
+                        reduce_money: ''
+                    })
+                },
+                submit: function() {
+                    if (!this.data.name) {
+                        $app.toast('请输入满减活动名称');
+                        return;
+                    }
+                    if (!this.data.begin_time) {
+                        $app.toast('请选择活动开始时间')
+                        return
+                    }
+                    if (!this.data.end_time) {
+                        $app.toast('请选择活动结束时间')
+                        return
+                    }
+                    for (var i = 0; i < this.data.rule_info.length; i++) {
+                        if (!this.data.rule_info[i].full_money) {
+                            $app.toast('请填写第' + (i + 1) + '项规则的优惠条件')
+                            return
+                        }
+                        if (!this.data.rule_info[i].full_money) {
+                            $app.toast('请填写第' + (i + 1) + '项规则的优惠内容')
+                            return
+                        }
+                    }
+                    var url = this.data.id ? $app.apiUrl.fullActivityUpdate : $app.apiUrl.fullActivityAdd;
+                    $app.ajax({
+                        url: url,
+                        data: this.data,
+                    }).then(function(resp) {
+                        $app.toast(resp.msg);
+                        api.sendEvent({
+                            name: 'updateFullActivities',
+                        });
+                        setTimeout(function() {
+                            api.closeWin();
+                        }, 500)
+
+                    })
+                }
+            },
+            mounted: function(){
+                if(api.pageParam.data){
+                    this.data = api.pageParam.data;
+                }
+            }
+        });
+    };
+</script>
+
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+
+    <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/aui.2.0.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/aui-skin.css" />
+    <style media="screen">
+      input::-webkit-input-placeholder{
+          color:#fff !important;
+      }
+    </style>
+</head>
+
+<body>
+    <header id="header" class="aui-bar aui-bar-nav">
+        <a class="aui-pull-left aui-btn" tapmde onclick="api.closeWin();">
+            <span class="aui-iconfont aui-icon-left"></span>
+        </a>
+        <div class="aui-title" style="left:1.2rem; right: 0.5rem;">
+            <div class="aui-searchbar" id="search" style="background:none">
+                <div class="aui-searchbar-input aui-border-radius" style="background:rgba(255,255,255,0.3);border-radius:20px;">
+                    <i class="aui-iconfont aui-icon-search" style="font-size:12px;"></i>
+                    <input type="search" placeholder="搜索商品" id="search-input" style="color:#fff">
+                </div>
+                <div class="aui-searchbar-btn" style="color:#fff;" tapmode>取消</div>
+            </div>
+        </div>
+    </header>
+</body>
+<script src="../../script/api.js"></script>
+<script src="../../script/fastclick.js"></script>
+<script src="../../script/app.js"></script>
+<script>
+    $app.ready()
+    apiready = function() {
+        $app.fixStatusBar('header');
+        api.setStatusBarStyle({
+            style: 'light'
+        });
+        $app.openFrame({
+            name: 'BarOrdersDetail',
+        });
+
+    }
+</script>
+
+</html>

@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/aui.2.0.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/aui-skin.css" />
+    <style media="screen">
+        .app {
+            font-size: 13px;
+            display: block;
+        }
+
+        .app .show-earnings {
+            position: relative;
+        }
+
+        .app .show-earnings img {
+            display: block;
+        }
+
+        .app .show-earnings .fix-box {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .app .show-earnings .fix-box .content {
+            color: #fff;
+            text-align: center;
+        }
+
+        .app .show-earnings .fix-box .content .title {
+            font-size: 20px;
+        }
+
+        .app .show-earnings .fix-box .content .number {
+            font-size: 44px;
+        }
+
+        .app .shop-status {
+            background: #eee;
+            padding: 10px 15px;
+        }
+
+        .app .shop-status .btn {
+            background: #6cdaac !important
+        }
+
+        .app .shop-orders .cos {
+            height: 100px;
+            border-radius: 10px;
+            color: #fff;
+            text-align: center;
+        }
+
+        .app .shop-orders .yesterday {
+            background: #6cdaac;
+            margin-right: 8px;
+        }
+
+        .app .shop-orders .today {
+            background: #5fcbcd;
+            margin-left: 8px;
+        }
+
+        .app .shop-orders .cos .number {
+            font-size: 30px;
+            padding-top: 10px;
+        }
+
+        .app .shop-order-m {
+            text-align: center;
+            color: #fff;
+        }
+
+        .app .shop-order-m .nav-title {
+            color: #000;
+            padding: 10px 0;
+        }
+
+        .app .shop-order-m .cos {
+            border-radius: 10px;
+            padding: 10px;
+            background: -webkit-linear-gradient(top, #5fcbcc 50%, #6cdaac);
+        }
+
+        .app .shop-order-m .cos .title {
+            font-size: 12px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 3px 25px;
+            background: #fff;
+            border-radius: 20px;
+        }
+
+        .btn-green {
+            background: #6cdaac;
+            color: #fff;
+        }
+
+        .order-item-content{
+            display: flex;
+            justify-content: space-around;
+        }
+        .order-item-content .order-item-info{
+            width: 23%;
+            border-radius: 10px;
+            background: -webkit-linear-gradient(top, #5fcbcc 50%, #6cdaac);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app" class="app">
+        <div class="show-earnings">
+            <img width='100%' src="../../image/bg.png">
+            <div class="fix-box">
+                <div class="content">
+                    <div class="title">今日总收益</div>
+                    <div class="number" v-text="indexData.today_income"></div>
+                </div>
+            </div>
+        </div>
+        <div class="aui-content shop-status" v-if="indexData.shop_info.is_business">
+            <div class="aui-row">
+                <div class="aui-col-xs-7">
+                    <span>店铺接单中</span>
+                </div>
+                <div tapmde @click="setBusiness(false)" class="aui-col-xs-5" style="text-align:right">
+                    <div class="btn btn-green">打烊</div>
+                </div>
+            </div>
+        </div>
+        <div class="aui-content shop-status" v-else>
+            <div class="aui-row">
+                <div class="aui-col-xs-7">
+                    <span>店铺已打烊</span>
+                </div>
+                <div @click="setBusiness(true)" class="aui-col-xs-5" style="text-align:right">
+                    <div class="btn btn-green">开始营业</div>
+                </div>
+            </div>
+        </div>
+        <div class="aui-content-padded shop-orders">
+            <div class="aui-row">
+                <div class="aui-col-xs-6">
+                    <div class="cos yesterday">
+                        <div class="number" v-text="indexData.yesterday_order_num"></div>
+                        <div class="title">昨日预定总数</div>
+                    </div>
+                </div>
+                <div class="aui-col-xs-6">
+                    <div class="cos today">
+                        <div class="number" v-text="indexData.today_order_num"></div>
+                        <div class="title">今日预定总数</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="aui-content-padded shop-order-m">
+            <h2 class="nav-title">订桌概览</h2>
+            <div class="order-item-content">
+                <div class="order-item-info aui-padded-15 ">
+                    <div class="aui-text-white" v-text="indexData.deliver_order_num"></div>
+                    <div class="aui-text-white">待处理</div>
+                </div>
+                <div class="order-item-info aui-padded-15 ">
+                    <div class="aui-text-white" v-text="indexData.sign_order_num"></div>
+                    <div class="aui-text-white">已确认</div>
+                </div>
+                <div class="order-item-info aui-padded-15 ">
+                    <div class="aui-text-white" v-text="indexData.comment_order_num"></div>
+                    <div class="aui-text-white">已取消</div>
+                </div>
+           <!--      <div class="order-item-info aui-padded-15">
+                    <div class="aui-text-white" v-text="indexData.return_goods_order_num"></div>
+                    <div class="aui-text-white">待处理</div>
+                </div> -->
+
+            </div>
+        </div>
+    </div>
+</body>
+<script src="../../script/api.js"></script>
+<script src="../../script/vue.min.js"></script>
+<script src="../../script/fastclick.js"></script>
+<script src="../../script/app.js"></script>
+<script>
+    $app.ready()
+    apiready = function() {
+        api.parseTapmode();
+        // vue 控制
+        var app = new Vue({
+            el: '#app',
+            data: {
+                indexData: {
+                    shop_info: {
+                        id: 1,
+                        name: "1号店铺",
+                        thum: '',
+                        is_business: true
+                    },
+                    today_income: 0,
+                    yesterday_order_num: 0,
+                    today_order_num: 0,
+                    deliver_order_num: 0,
+                    sign_order_num: 0,
+                    comment_order_num: 0,
+                    return_goods_order_num: 0
+                }
+            },
+            computed: {
+
+            },
+            methods: {
+                setting: function() {
+                    $app.openWin({
+                        name: 'BarHomeInfo'
+                    })
+                },
+                getindexData: function() {
+                    var that = this;
+                    $app.ajax({
+                        url: $app.apiUrl.indexData,
+                    }).then(function(ret) {
+                        that.data = ret.data;
+                    })
+                },
+                setBusiness: function(flag, send) {
+                    var that = this;
+                    if (!send) {
+                        api.confirm({
+                            title: flag ? '开始营业?' : '确认打烊?',
+                            buttons: ['确定', '取消']
+                        }, function(ret, err) {
+                            if (ret.buttonIndex == 1) {
+                                that._ajaxBusiness(flag, that)
+                            }
+                        });
+                    } else {
+                        that._ajaxBusiness(flag, that)
+                    }
+                },
+                _ajaxBusiness: function(flag, that) {
+                    console.log(flag)
+                    $app.ajax({
+                        url: $app.apiUrl.changeBusinessStatus,
+                        data: {
+                            is_business: flag
+                        }
+                    }).then(function(ret) {
+                        that.indexData.shop_info.is_business = ret.data.is_business;
+                    })
+                },
+                openList: function(id) {
+                    api.sendEvent({
+                        name: 'selectOrder',
+                        extra: {
+                            type: id
+                        }
+                    });
+                }
+            },
+            mounted: function() {
+                this.getindexData();
+            }
+        });
+        api.addEventListener({
+            name: 'changeBusiness'
+        }, function(ret, err) {
+            app.setBusiness(ret.value.status, 'send');
+        });
+
+        api.setRefreshHeaderInfo({
+            bgColor: '#fff'
+        }, function(ret, err) {
+            app.getindexData();
+        });
+
+    };
+</script>
+
+</html>

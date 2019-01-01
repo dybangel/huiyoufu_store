@@ -1,0 +1,12 @@
+{
+	"index.html": {
+		"resources": [
+			"html/BarHome/indexFrm.html"
+		],
+		"refer": [
+			"html/BarHome/indexFrm.html",
+			"html/BarHomeInfo/indexFrm.html",
+			"html/BarItems/indexFrm.html"
+		]
+	}
+}

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/aui.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/aui-skin.css" />
+    <style media="screen">
+      .aui-iconfont{
+        margin-left: 5px;
+      }
+    </style>
+</head>
+
+<body>
+    <div id="app" class="app">
+      <ul class="aui-list aui-list-in">
+          <li class="aui-list-item">
+              <div class="aui-list-item-inner">
+                  <div class="aui-list-item-title">
+                    <span tapmde @click="changeAllCate()"><i class="ali-iconfont icon-caidan"></i> 全部分类</span>
+                    <span v-for="(select,index) in thisSelect" tapmde @click="changeFCate(select,index)" v-key="select">
+                      <i class="aui-iconfont aui-icon-right"></i>
+                      <span v-text="select.name"></span>
+                    </span>
+                  </div>
+              </div>
+          </li>
+
+          <li class="aui-list-item" v-for="(cate,key) in cateTree" v-key="cate">
+              <div class="aui-list-item-inner">
+                  <div class="aui-list-item-title" tapmde @click="selecCate(cate)">
+                    <span v-text="cate.name"></span>
+                    <i v-if="cate.is_has_child" class="aui-iconfont aui-icon-right"></i>
+                  </div>
+                  <div class="aui-list-item-right">
+                    <i class="aui-iconfont aui-icon-edit" tapmde @click="openEdit(cate.id)"></i>
+                  </div>
+              </div>
+          </li>
+      </ul>
+    </div>
+</body>
+<script src="../../script/api.js"></script>
+<script src="../../script/vue.min.js"></script>
+<script src="../../script/fastclick.js"></script>
+<script src="../../script/app.js"></script>
+<script>
+    $app.ready()
+    apiready = function() {
+        api.parseTapmode();
+        // vue 控制
+        var app = new Vue({
+            el: '#app',
+            data: {
+              cateTree:[],
+              thisSelect:[],
+              cateData:{
+                name:'',
+                thum:'',
+                pid:0,
+                sort:0,
+                status:1,
+              }
+            },
+            computed: {
+
+            },
+            methods: {
+                changeAllCate:function(){
+                  var that = this;
+                  that.cateData.pid = 0;
+                  that.thisSelect = [];
+                  this.getChildCateTree(0)
+                },
+                changeFCate:function(select,index){
+                  var that = this;
+                  if(select.id == that.cateData.pid){
+                    return;
+                  }
+                  that.cateData.pid = select.id;
+                  if(index < that.thisSelect.length){
+                    that.thisSelect = that.thisSelect.slice(0,index+1);
+                    that.getChildCateTree(select.id);
+                  }
+                },
+                selecCate:function(cate){
+                  var that = this;
+                  if(!cate.is_has_child){
+                    return;
+                  }
+                  that.thisSelect.push(cate);
+                  that.cateData.pid = cate.id;
+                  that.getChildCateTree(cate.id);
+                },
+                openEdit:function(id){
+                  $app.openWin({
+                    name:'BarItemsCategoryEdit',
+                    pageParam:{
+                      type:'edit',
+                      id:id
+                    }
+                  })
+                },
+                getChildCateTree:function(pid){
+                  var that = this;
+                  $app.ajax({
+                    url:$app.apiUrl.cateReadChild,
+                    data:{
+                      pid:pid
+                    }
+                  }).then(function(ret){
+                    that.cateTree = ret.data
+                  })
+                }
+            },
+            watch: {
+
+            },
+            mounted:function(){
+              this.getChildCateTree(0);
+            }
+        });
+        api.addEventListener({
+            name: 'refreshCate'
+        }, function(){
+            app.$data.thisSelect = [];
+            app.getChildCateTree(0);
+        });
+
+    };
+</script>
+
+</html>

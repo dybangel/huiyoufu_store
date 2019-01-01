@@ -1,0 +1,324 @@
+.app{
+  font-size: 13px;
+}
+.flows-box{
+  margin-top: 10px;
+  padding-top: 30px;
+  background: #fff;
+}
+.flows-box .inbox{
+  padding-top: 20px;
+  position: relative;
+}
+.flows-box .flows{
+  position: relative;
+  z-index: 2;
+  margin-top: 5px;
+  display: flex;
+  height: 100px;
+}
+.flows-box .flows .flow{
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.flows-box .flows .flow .inde{
+  text-align: center;
+}
+.flows-box .flows .flow .inde .dot{
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #ccc;
+  display: inline-block;
+}
+.flows-box .flows .flow .inde .dot.g{
+  background: #66d3ba;
+}
+.flows-box .flows .flow .inde .text{
+  line-height: 30px;
+  font-size: 12px;
+}
+.flows-box .lines {
+  height: 100%;
+  position: absolute;
+  z-index: 1
+  top: 0;
+  bottom: 0;
+}
+.flows-box .lines .line{
+  height: 2px;
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.flows-box .lines .line.line-default{
+  background: #ccc;
+}
+.flows-box .lines .line.line-progress{
+  width: 12.5%;
+  background: #66d3ba;
+}
+.flows-box .lines .status{
+  width: 100%;
+  height: 50%;
+  display: flex;
+}
+.flows-box .lines .status .info{
+  flex: 1;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+}
+.flows-box .lines .status .info .text{
+  font-size: 10px;
+  padding: 2px 10px;
+  background: #66d3ba;
+  color: #fff;
+  border-radius: 10px;
+  position: relative;
+}
+.flows-box .lines .status .info .text span{
+  position: relative;
+  z-index: 2;
+}
+.flows-box .lines .status .info .text::after{
+  content: " ";
+  display: block;
+  position: absolute;
+  z-index: 1;
+  border-radius: 1px;
+  bottom: -3px;
+  left: 50%;
+  margin-left: -5px;
+  width: 10px;
+  height: 10px;
+  background: #66d3ba;
+  -webkit-transform:rotate(45deg);
+}
+.refund{
+  background: #fff;
+  padding:15px 15px;
+}
+.refund .text{
+  text-align: center;
+  line-height: 25px;
+  font-size: 15px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+.refund .btns{
+  text-align: center;
+  padding-top: 15px;
+  display: flex;
+}
+.refund .btns .flex{
+  flex: 1;
+}
+.refund .btns .flex .btn{
+  display: inline-block;
+  padding: 10px 40px;
+  background: #fff;
+  border-radius: 10px;
+}
+.refund .btns .flex .btn-green{
+  background: #6cdaac;
+  color:#fff;
+}
+.refund .btns .flex .btn-default{
+  background: #fff;
+  border: 1px solid #ccc;
+}
+
+
+.address-info{
+  margin-top: 10px;
+  background: #fff;
+  padding: 15px;
+}
+.address-info .order{
+  text-align: center;
+  line-height: 50px;
+  border-bottom: 1px solid #e6e6e6;
+  display: flex;
+}
+.address-info .order .left{
+  flex: 50px 0 0;
+}
+.address-info .order .center{
+  flex: 1
+}
+.address-info .order .right{
+  flex: 60px 0 0;
+}
+.address-info .order .bold{
+  font-size: 15px;
+  font-weight: 700;
+}
+.address-info .order .green{
+  color: #66d3ba;
+}
+.address-info .addrss{
+  padding-top: 15px;
+  font-size: 15px;
+  display: flex;
+}
+.address-info .addrss .icon{
+  flex: 50px 0 0;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+}
+.address-info .addrss .icon i{
+  font-size: 20px;
+}
+.address-info .addrss .content{
+  flex: 1;
+}
+.address-info .addrss .address-text{
+  line-height: 20px;
+  font-weight: bold;
+}
+.address-info .addrss .address-name{
+  line-height: 30px;
+}
+
+.send-info{
+  margin-top: 10px;
+}
+.send-info .waited{
+  color: #fff;
+  font-size: 20px;
+  height: 100px;
+  background: -webkit-linear-gradient(top, #6cdaac 50%, #5fcbcc);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.send-info .waited i{
+  font-size: 30px !important;
+  margin-right: 10px;
+}
+
+.send-info .actions{
+  padding: 0 15px;
+  background: #fff;
+  height: 100px;
+  display: flex;
+}
+.send-info .actions .icon{
+  flex: 80px 0 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.send-info .actions .icon i{
+  font-size: 40px !important;
+}
+.send-info .actions .info-{
+  flex: 1;
+  padding: 20px 0;
+  line-height: 30px;
+}
+.send-info .actions .info- .title{
+  font-size: 15px;
+  font-weight: bold;
+}
+.send-info .actions .tel{
+  flex: 50px 0 0;
+  display: flex;
+  height: 100px;
+  justify-content: center;
+  align-items: center;
+}
+.send-info .actions .tel .oval{
+  background: -webkit-linear-gradient(top, #6cdaac 50%, #5fcbcc);
+  width: 50px;
+  height: 50px;
+  display: inline-block;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 50px;
+}
+.item-info{
+  margin-top: 10px;
+  background: #fff;
+  padding: 15px;
+}
+.item-info .item{
+  padding: 8px;
+  background: #f7f7f7;
+  margin-bottom: 15px;
+  display: flex;
+}
+.item-info .item .left{
+  flex: 60px 0 0;
+}
+.item-info .item .left .img{
+    width: 60px;
+    height: 60px;
+    background: #ccc;
+}
+.item-info .item .right{
+  flex: 1;
+  margin-left: 10px;
+}
+.item-info .item .right .title{
+  height: 40px;
+  line-height: 20px;
+　/*text-overflow: ellipsis;*/
+　overflow: hidden;
+}
+.item-info .item .right .price{
+  line-height: 20px;
+}
+.red{
+  color: red
+}
+.item-info .item .price .num{
+  text-align: right;
+}
+.item-info .money{
+  line-height: 30px;
+}
+.item-info .money .number{
+  text-align: right;
+}
+.sales-info{
+  margin-top: 10px;
+  background: #fff;
+  padding:10px 15px;
+}
+.sales-info .text{
+  line-height: 25px;
+  margin-bottom: 10px;
+}
+.sales-info .btns{
+  text-align: right;
+  border-top:1px solid #f0f0f0;
+  padding-top: 15px;
+}
+.sales-info .btns .btn{
+  display: inline-block;
+  padding: 3px 25px;
+  background: #fff;
+  border-radius: 20px;
+}
+.sales-info .btns .btn-green{
+  background: #6cdaac;
+  color:#fff;
+}
+.sales-info .btns .btn-default{
+  background: #fff;
+  border: 1px solid #ccc;
+}
+.order-number{
+  margin-top: 10px;
+  background: #fff;
+  padding:10px 15px;
+}
+.order-number .title{
+  line-height: 30px;
+}

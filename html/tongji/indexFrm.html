@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+
+<head _wxhkphogpkobbkjccgfifhfjlahnoocnan_="shake_1.0">
+<meta charset="utf-8">
+<title></title>
+<meta name="keywords" content="有爱的">
+<meta name="description" content="有爱的">
+<link rel="icon" href="/favicon.ico" mce_href="/favicon.ico" type="image/x-icon">
+<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/data.css">
+<link href="css/iconfont/Rjdaoico.css" rel="stylesheet" type="text/css">
+
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/slider.js"></script>
+<!--下拉动画-->
+<link rel="stylesheet" href="css/animate.min.css">
+<script type="text/javascript" src="js/wow.min.js"></script>
+<script>
+	if (!(/msie [6|7|8|9]/i.test(navigator.userAgent))){
+		new WOW().init();
+	};
+	$(function(){
+		
+	});
+</script>
+<!--下拉动画-->
+<script type="text/javascript">
+	function timer(opj){
+		$(opj).find('ul').animate({
+			marginTop : "-3.0rem"  
+			},500,function(){  
+			$(this).css({marginTop : "0.0rem"}).find("a:first").appendTo(this);  
+		})  
+	}
+	$(function(){ 
+		var num = $('.notice_active').find('a').length;
+		if(num > 1){
+		   var time=setInterval('timer(".notice_active")',3500);
+			$('.gg_more a').mousemove(function(){
+				clearInterval(time);
+			}).mouseout(function(){
+				time = setInterval('timer(".notice_active")',3500);
+			}); 
+		}
+		
+		$(".news_ck").click(function(){
+			location.href = $(".notice_active .notice_active_ch").children(":input").val();
+		})
+	});
+</script>
+
+<style>@font-face{font-family:uc-nexus-iconfont;src:url(chrome-extension://pogijhnlcfmcppgimcaccdkmbedjkmhi/res/font_9qmmi8b8jsxxbt9.woff) format('woff'),url(chrome-extension://pogijhnlcfmcppgimcaccdkmbedjkmhi/res/font_9qmmi8b8jsxxbt9.ttf) format('truetype')}</style></head>
+
+<body style="zoom: 1;">
+
+ <div id="app" class="app">
+<div class="datamain">
+<!---头部 开始 --->
+	<div class="data-nav">
+    	<div class="bw">
+        	<a href="index.html" class="l"><i class="icon-edff"></i></a>
+            	<div class="name">公开数据中心</div>
+        	<a href="user_doubt.html" class="r"><i class="icon-ecfa"></i></a>
+        </div>
+    </div>
+    <div class="h-height"></div>
+<!---头部 结束 --->
+
+<!---数据转盘 开始--->
+	<div class="data-turntable wow zoomIn animated" style="visibility: visible; animation-name: zoomIn;">
+    <div class="Mod xzleft">
+    <div class="Mod1"></div>
+    <div class="Mod2 xzleft"></div>
+    <div class="Mod3"></div>
+    <div class="Mod4 xzleft"></div>
+    <div class="text">今日入账</div>
+    <div class="num" id="sx2">0.00</div>
+    </div>
+    </div>
+<!---数据转盘 结束--->
+
+
+<!---搜索我的商品 S--->
+<div class="mygoods-so">
+	<input type="text" name="text" required="" class="input" placeholder="输入手机号码或商品编号" autocomplete="off">
+    <input type="submit" name="button" class="button" value="搜索我的商品">
+</div>
+<!---搜索我的商品 E--->
+
+
+<!---数据导航列表 S--->
+    <div class="data-icolist">
+    
+        <a href="data_total.html" class="item-name">
+            <div class="coml wow slideInRight animated" style="visibility: visible; animation-name: slideInRight;">
+                <i class="icon-eccc"></i>
+                <span>平台总额度</span>
+            </div>
+            <div class="comr">
+                <span class="wow slideInLeft animated" style="visibility: visible; animation-name: slideInLeft;">￥26228025.94</span>
+                <i class="icon-eed3"></i>
+            </div>
+        </a>
+        
+        <a href="data_userlist.html" class="item-name">
+            <div class="coml wow slideInRight animated" style="visibility: visible; animation-name: slideInRight;">
+                <i class="icon-ef56"></i>
+                <span>历史注册用户</span>
+            </div>
+            <div class="comr">
+                <span class="wow slideInLeft animated" style="visibility: visible; animation-name: slideInLeft;">23456</span>
+                <i class="icon-eed3"></i>
+            </div>
+        </a>
+        
+        <a href="data_zhichu.html" class="item-name">
+            <div class="coml wow slideInRight animated" style="visibility: visible; animation-name: slideInRight;">
+                <i class="icon-ec6d"></i>
+                <span>支出额度</span>
+            </div>
+            <div class="comr">
+                <span class="wow slideInLeft animated" style="visibility: visible; animation-name: slideInLeft;">￥9628.00</span>
+                <i class="icon-eed3"></i>
+            </div>
+        </a>
+        
+        <a href="data_goodslist.html" class="item-name">
+            <div class="coml wow slideInRight animated" style="visibility: visible; animation-name: slideInRight;">
+                <i class="icon-bb01"></i>
+                <span>累计商品数</span>
+            </div>
+            <div class="comr">
+                <span class="wow slideInLeft animated" style="visibility: visible; animation-name: slideInLeft;">624</span>
+                <i class="icon-eed3"></i>
+            </div>
+        </a>
+        
+        <a href="data_goodslist.html" class="item-name">
+            <div class="coml wow slideInRight animated" style="visibility: visible; animation-name: slideInRight;">
+                <i class="icon-ee76"></i>
+                <span>通过商品数</span>
+            </div>
+            <div class="comr">
+                <span class="wow slideInLeft animated" style="visibility: visible; animation-name: slideInLeft;">578</span>
+                <i class="icon-eed3"></i>
+            </div>
+        </a>
+        
+        <a href="data_goodslist.html" class="item-name">
+            <div class="coml wow slideInRight" style="visibility: hidden; animation-name: none;">
+                <i class="icon-edd8"></i>
+                <span>已售商品数</span>
+            </div>
+            <div class="comr">
+                <span class="wow slideInLeft" style="visibility: hidden; animation-name: none;">278</span>
+                <i class="icon-eed3"></i>
+            </div>
+        </a>
+        
+        <a href="data_goodslist.html" class="item-name">
+            <div class="coml wow slideInRight" style="visibility: hidden; animation-name: none;">
+                <i class="icon-eccc"></i>
+                <span>商品总价值</span>
+            </div>
+            <div class="comr">
+                <span class="wow slideInLeft" style="visibility: hidden; animation-name: none;">￥2622.00</span>
+                <i class="icon-eed3"></i>
+            </div>
+        </a>
+        
+        <a href="" class="item-name">
+            <div class="coml wow slideInRight" style="visibility: hidden; animation-name: none;">
+                <i class="icon-e920"></i>
+                <span>众筹总额度</span>
+            </div>
+            <div class="comr">
+                <span class="wow slideInLeft" style="visibility: hidden; animation-name: none;">￥12622.16</span>
+                <i class="icon-eed3"></i>
+            </div>
+        </a>
+        
+        <a href="data_juan.html" class="item-name">
+            <div class="coml wow slideInRight" style="visibility: hidden; animation-name: none;">
+                <i class="icon-ba85"></i>
+                <span>爱心捐赠</span>
+            </div>
+            <div class="comr">
+                <span class="wow slideInLeft" style="visibility: hidden; animation-name: none;">￥2862.39</span>
+                <i class="icon-eed3"></i>
+            </div>
+        </a>
+        
+    
+    </div>
+<!---数据导航列表 E--->
+
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+</body></html>

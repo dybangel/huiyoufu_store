@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,initial-scale=1.0,width=device-width" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/aui.2.0.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/aui-skin.css" />
+    <style media="screen">
+        .come {
+            text-align: center;
+            padding-top: 100px;
+        }
+
+        .inputs {
+            padding: 30px;
+        }
+
+        .inputs .input-line {
+            border-bottom: 1px solid #ccc;
+            margin-bottom: 20px;
+        }
+
+        .buttons {
+            padding: 0 30px;
+        }
+
+        .buttons .login {
+            height: 50px;
+            background: -webkit-linear-gradient(left, #6cdaac 50%, #5fcbcc);
+            color: #fff;
+            text-align: center;
+            line-height: 50px;
+            border-radius: 50px;
+            margin-bottom: 25px;
+        }
+
+        .buttons .other {
+            text-align: center;
+        }
+
+        .info {
+            text-align: center;
+            margin-top: .7rem;
+            font-size: 18px;
+            height: 80px;
+            line-height: 80px;
+        }
+
+        .info span {
+            color: #6cdaab;
+        }
+    </style>
+</head>
+
+<body>
+    <header id="header" class="aui-bar aui-bar-nav">登录</header>
+    <div id="app">
+        <div class="come">
+            <h1>欢迎登录有什么</h1>
+        </div>
+        <div class="inputs">
+            <div class="input-line">
+                <input type="text" placeholder="输入手机号码" pattern="[0-9]*" v-model="mobile">
+            </div>
+            <div class="input-line">
+                <input type="password" placeholder="输入登录密码" v-model="password">
+            </div>
+        </div>
+        <div class="buttons">
+            <div class="login" @click="goIndex">登录</div>
+            <div class="other">
+                <div class="aui-row">
+                    <div class="aui-col-xs-12" @click="getPass">忘记密码?</div>
+                </div>
+            </div>
+        </div>
+        <div class="info">
+            联系平台：<span>181-0000-0000</span>
+        </div>
+    </div>
+    <footer id="footer" class="aui-bar aui-bar-tab" style="visibility: hidden;">
+        <div class="aui-bar-tab-item aui-active" tapmode>
+            <i class="aui-iconfont aui-icon-home"></i>
+            <div class="aui-bar-tab-label">首页</div>
+        </div>
+    </footer>
+</body>
+<script src="../../script/api.js"></script>
+<script src="../../script/fastclick.js"></script>
+<script src="../../script/vue.min.js"></script>
+<script src="../../script/app.js"></script>
+<script>
+    $app.ready();
+    apiready = function() {
+        $app.fixStatusBar('header');
+        api.setStatusBarStyle({
+            style: 'light'
+        });
+        var footer = $api.byId('footer');
+        var footerPos = $api.offset(footer);
+
+        var header = $api.byId('header');
+        var headerPos = $api.offset(header);
+        var frameHeight = api.frameHeight - footerPos.h - headerPos.h;
+        // vue 控制
+        var app = new Vue({
+            el: '#app',
+            data: {
+                mobile:'13300000002',
+                password:'123456',
+            },
+            computed: {},
+            methods: {
+                goIndex: function() {
+                    var that = this;
+                    if(!$app.validate.mobile(this.mobile)){
+                        $app.toast('请输入正确的手机号码');
+                        return;
+                    }
+                    if(!$app.validate.password(this.password)){
+                        $app.toast('请输入6位及以上的数字字母组合密码');
+                        return;
+                    }
+                    $app.ajax({
+                        url: $app.apiUrl.login,
+                        data:{
+                            mobile:this.mobile,
+                            password: this.password,
+                        }
+                    }).then(function(ret){
+                        $app.toast(ret.msg);
+                        that.mobile = '';
+                        that.password = '';
+                        $api.setStorage('token', ret.data.token.token);
+                        $api.setStorage('mobile', ret.data.user.mobile);
+                        api.setFrameAttr({
+                            name: 'BaseLogin',
+                            hidden: true,
+                        })
+                        api.openFrame({
+                            name: 'BarHome',
+                            url: '../BarHome/indexFrm.html',
+                            bounces: true,
+                            rect: {
+                                x: 0,
+                                y: headerPos.h,
+                                w: 'auto',
+                                h: frameHeight
+                            }
+                        })
+                    })
+                },
+                getPass: function() {
+                    $app.openWin({
+                        name: 'BaseGetPass'
+                    })
+                }
+            },
+            watch: {
+
+            }
+        });
+    };
+</script>
+
+</html>

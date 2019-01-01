@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="../../css/api.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/aui.css" />
+    <link rel="stylesheet" type="text/css" href="../../css/aui-skin.css" />
+    <style media="screen">
+        body {
+            background: #fff;
+        }
+
+        .app {
+            font-size: 13px;
+            background: #fff;
+        }
+
+        .bg {
+            height: 100px;
+            background: -webkit-linear-gradient(left, #36dbab 60%, #36d6b6);
+        }
+
+        .inputs {
+            margin: 10px;
+            margin-top: -50px;
+            border-radius: 10px;
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0px 2px 9px #ADADAD;
+            margin-bottom: 10px;
+        }
+
+        .add-option {
+            display: flex;
+            margin-bottom: 5px;
+        }
+
+        .add-option .text {
+            flex: 80px 0 0;
+            font-size: 15px;
+            line-height: 30px;
+        }
+
+        .add-option .option {
+            flex: 1;
+            color: #777;
+        }
+
+        .add-option .option .select {
+            border: 1px solid #e6e6e6;
+            border-radius: 5px;
+            height: 30px;
+            line-height: 30px;
+            padding: 0 5px;
+            margin-bottom: 5px;
+            display: flex;
+        }
+
+        .add-option .option .select .name {
+            height: 29px;
+            font-size: 14px;
+        }
+
+        .add-option .option .select .s-time {
+            flex: 2;
+        }
+
+        .add-option .option .select .select-time {
+            flex: 1;
+            text-align: right;
+        }
+
+        .add-option .option .select .select-time span {
+            font-size: 13px;
+        }
+
+        .lists {
+            background: #fff;
+        }
+
+        .lists .list {
+            padding: 10px;
+            display: flex;
+            border-bottom: 1px solid #e5e5e5;
+        }
+
+        .lists .list .image {
+            flex: 80px 0 0;
+            border-radius: 5px;
+            background: #fff;
+            width: 80px;
+            height: 80px;
+            overflow: hidden;
+        }
+
+        .lists .list .image img {
+            width: 100%;
+        }
+
+        .lists .list .content {
+            flex: 1;
+            margin-left: 10px;
+        }
+
+        .lists .list .list-title {
+            line-height: 20px;
+            margin-bottom: 10px;
+        }
+
+        .list-price {
+            display: flex;
+            line-height: 30px;
+        }
+
+        .list-price .r-price {
+            flex: 1;
+            color: #777;
+            text-decoration: line-through;
+        }
+
+        .list-price .t-price {
+            flex: 1;
+            text-align: right;
+            color: red;
+        }
+
+        .buttons {
+            padding: 20px;
+        }
+
+        .buttons .longBtn {
+            height: 50px;
+            background: -webkit-linear-gradient(left, #6cdaac 50%, #5fcbcc);
+            color: #fff;
+            text-align: center;
+            line-height: 50px;
+            border-radius: 50px;
+            margin-bottom: 25px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app" class="app">
+        <div class="bg"></div>
+        <div class="inputs">
+            <div class="add-option">
+                <div class="text">活动名称</div>
+                <div class="option">
+                    <div class="select">
+                        <input type="text" class="name" v-model="data.name" placeholder="请输入活动名称">
+                    </div>
+                </div>
+            </div>
+            <div class="add-option">
+                <div class="text">活动时间</div>
+                <div class="option">
+                    <div class="select" @click="selectTime('begin_time')">
+                        <div class="s-time" v-text="data.begin_time || '开始时间'"></div>
+                        <div class="select-time">请选择 <span class="aui-iconfont aui-icon-right"></span></div>
+                    </div>
+                    <div class="select" @click="selectTime('end_time')">
+                        <div class="s-time" v-text="data.end_time || '结束时间'"></div>
+                        <div class="select-time">请选择 <span class="aui-iconfont aui-icon-right"></span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="lists">
+            <div class="list" v-for="(rule,key) in data.rule_info" :key="key" @click="updateRule(rule)">
+                <div class="image">
+                    <img :src="rule.goods_info.thum">
+                </div>
+                <div class="content">
+                    <div class="list-title" v-text="rule.goods_info.name"></div>
+                    <div class="list-price">
+                        <div class="r-price">￥
+                            <span v-text="rule.goods_info.sell_price"></span></div>
+                        <div class="t-price">折扣价: ￥<span v-text="rule.discount_price"></span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="buttons">
+            <div class="longBtn" @click="selectGoods">添加折扣商品</div>
+        </div>
+    </div>
+</body>
+<script src="../../script/api.js"></script>
+<script src="../../script/vue.min.js"></script>
+<script src="../../script/fastclick.js"></script>
+<script src="../../script/app.js"></script>
+<script>
+    window.addEventListener('load', function() {
+        FastClick.attach(document.querySelector('.longBtn'));
+    }, false);
+    var app = {};
+    apiready = function() {
+        api.parseTapmode();
+        // vue 控制
+        app = new Vue({
+            el: '#app',
+            data: {
+                data: {
+                    name: '',
+                    begin_time: '',
+                    end_time: '',
+                    rule_info: []
+                },
+            },
+            methods: {
+                selectTime: function(type) {
+                    var that = this;
+                    $app.selectTime(function(time){
+                        that.data[type] = time;
+                    })
+                },
+                updateRule: function(rule){
+                    api.prompt({
+                        title: '请输入折扣价',
+                        type: 'number',
+                        buttons: ['确定', '取消']
+                    }, function(ret, err) {
+                        if(ret.buttonIndex == 1 && ret.text){
+                            rule.discount_price = ret.text
+                        }
+                    })
+                },
+                selectGoods: function() {
+                    api.openFrame({
+                        name: 'selectGoodsFrm',
+                        url: './goodsSelectFrm.html',
+                        rect: {
+                            x: 0,
+                            y: 10,
+                            w: 'auto',
+                            h: 'auto'
+                        },
+                        bgColor: 'rgba(0,0,0,0)',
+                        vScrollBarEnabled: false,
+                        hScrollBarEnabled: false
+                    });
+                },
+                submit: function() {
+                    if (!this.data.name) {
+                        $app.toast('请输入满减活动名称');
+                        return;
+                    }
+                    if (!this.data.begin_time) {
+                        $app.toast('请选择活动开始时间')
+                        return
+                    }
+                    if (!this.data.end_time) {
+                        $app.toast('请选择活动结束时间')
+                        return
+                    }
+                    if (!this.data.rule_info.length) {
+                        $app.toast('请至少添加一个折扣商品');
+                        return;
+                    }
+                    var url = this.data.id ? $app.apiUrl.discountActivityUpdate: $app.apiUrl.discountActivityAdd;
+                    $app.ajax({
+                        url: url,
+                        data: this.data,
+                    }).then(function(resp) {
+                        $app.toast(resp.msg);
+                        api.sendEvent({
+                            name: 'updateDiscountActivities',
+                        });
+                        setTimeout(function(){
+                            api.closeWin();
+                        }, 500)
+                    })
+                }
+            },
+            mounted: function(){
+                if(api.pageParam.data){
+                    this.data = api.pageParam.data;
+                }
+            }
+        });
+        api.addEventListener({
+            name: 'selectGoods'
+        }, function(ret, err) {
+            if (ret) {
+                var goods = ret.value.goods;
+                if(app.data.rule_info.some(function(item){
+                    return item.goods_info.id == goods.id
+                })){
+                    $app.toast('该商品已被加入');
+                    return;
+                }
+                api.prompt({
+                    title: '请输入折扣价',
+                    type: 'number',
+                    buttons: ['确定', '取消']
+                }, function(ret, err) {
+                    if (ret.buttonIndex == 1 && ret.text) {
+                        app.data.rule_info.push({
+                            goods_id: goods.id,
+                            discount_price: ret.text,
+                            goods_info: goods
+                        })
+                    }
+                });
+            } else {
+                alert(JSON.stringify(err));
+            }
+        });
+    };
+</script>
+
+</html>
