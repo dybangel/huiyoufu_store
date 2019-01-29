@@ -8,5 +8,11 @@
 			"html/BarHomeInfo/indexFrm.html",
 			"html/BarItems/indexFrm.html"
 		]
+	},
+	"html/BarItems/indexFrm.html": {
+		"refer": [
+			"html/BarItemsMessage/indexFrm.html",
+			"html/BarItemsCategoryEdit/indexFrm.html"
+		]
 	}
 }

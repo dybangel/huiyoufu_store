@@ -58,7 +58,7 @@
             <i class="ali-iconfont icon-bangzhu"></i>
             <div class="aui-bar-tab-label">店面帮助</div>
         </div>
-        <div class="aui-bar-tab-item" LJ="html\BarHomeInfo\indexfrm.html" tapmode>
+        <div class="aui-bar-tab-item" LJ="html\BarHomeInfo\indexFrm.html" tapmode>
             <!-- <div class="aui-dot"></div> -->
             <i class="ali-iconfont icon-cf-c26"></i>
             <div class="aui-bar-tab-label">店铺管理</div>
@@ -119,7 +119,7 @@
 			mui('body').on('tap','.aui-bar-tab-item', function(e) {
 				
 				var targetTab = this.getAttribute('LJ');
-				
+				//alert("targettab="+targetTab+" activetab="+activeTab);
 				if (targetTab == activeTab) {
 					return;
 					
@@ -127,11 +127,12 @@
 				//更换标题
 			//	title.innerHTML = this.querySelector('.mui-tab-label').innerHTML;
 				//显示目标选项卡
-				//若为iOS平台或非首次显示，则直接显示
-				if(mui.os.ios||aniShow[targetTab]){
+				//若为iOS平台或非首次显示，则直接显示||aniShow[targetTab]
+				if(mui.os.ios){
 
 					targetTab=targetTab.replace('\\','/');
 					targetTab=targetTab.replace('\\','/');
+				//	alert("ios+"+targetTab);
 					plus.webview.show(targetTab);
 					
 				}else{
@@ -140,6 +141,7 @@
 					var temp = {};
 					temp[targetTab] = "true";
 					mui.extend(aniShow,temp);
+				//	alert("android+"+targetTab);
 					plus.webview.show(targetTab,"fade-in",300);
 				}
 				//隐藏当前;

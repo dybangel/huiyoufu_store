@@ -128,8 +128,8 @@
             <img width='100%' src="../../image/bg.png">
             <div class="fix-box">
                 <div class="content">
-                    <div class="title">今日总收益</div>
-                    <div class="number" v-text="indexData.today_income"></div>
+                    <div class="title">会员总数</div>
+                    <div class="number" v-text="indexData.today_income">20人</div>
                 </div>
             </div>
         </div>
@@ -158,13 +158,15 @@
                 <div class="aui-col-xs-6">
                     <div class="cos yesterday">
                         <div class="number" v-text="indexData.yesterday_order_num"></div>
-                        <div class="title">昨日预定总数</div>
+                        <div class="title">优惠卷类型</div>
+                        <div class="number" v-text="indexData.today_income">15张</div>
                     </div>
                 </div>
                 <div class="aui-col-xs-6">
                     <div class="cos today">
                         <div class="number" v-text="indexData.today_order_num"></div>
-                        <div class="title">今日预定总数</div>
+                        <div class="title">摇奖活动</div>
+                        <div class="number" v-text="indexData.today_income">已开启</div>
                     </div>
                 </div>
             </div>

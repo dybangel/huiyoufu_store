@@ -117,21 +117,21 @@
 <body>
     <div id="nav" class="aui-tab">
         <div class="aui-tab-item aui-active" tapmode>全部</div>
-        <div class="aui-tab-item" tapmode>新订单</div>
+        <div class="aui-tab-item" tapmode>待确认</div>
         <div class="aui-tab-item" tapmode>进行中</div>
-        <div class="aui-tab-item" tapmode>已完成</div>
-        <div class="aui-tab-item" tapmode>退换货</div>
+        <div class="aui-tab-item" tapmode>已确认</div>
+        <div class="aui-tab-item" tapmode>已取消</div>
     </div>
 
     <div id="app" class="app">
-        <!-- <div class="aui-searchbar" id="search">
+        <div class="aui-searchbar" id="search">
             <div class="aui-searchbar-input aui-border-radius" tapmode onclick="doSearch()">
                 <form action="javascript:search();">
                     <input type="search" placeholder="请输入搜索内容" id="search-input">
                 </form>
                 <i class="aui-iconfont aui-icon-search"></i>
             </div>
-        </div> -->
+        </div>
         <div class="order-list">
             <div class="list">
                 <div class="info" tapmode @click="goDetail">
@@ -139,11 +139,11 @@
                     <div class="item-info">
                         <div class="title">
                             <span>#16</span>
-                            <div class="status">待接单</div>
+                            <div class="status">待确认</div>
                         </div>
                         <div class="content">
                           <div class="lines">
-                            <div class="line">收货人：韩梅梅</div>
+                            <div class="line">会员：韩梅梅</div>
                             <div class="line">订单时间：2018.06.12 12:34:08</div>
                           </div>
                           <div class="icon">
@@ -163,7 +163,7 @@
                     <div class="item-info">
                         <div class="title">
                             <span>#16</span>
-                            <div class="status">待发货</div>
+                            <div class="status">已确认</div>
                         </div>
                         <div class="content">
                           <div class="lines">
@@ -177,7 +177,8 @@
                     </div>
                 </div>
                 <div class="btns">
-                    <div class="btn btn-green">去发货</div>
+                	<div class="btn btn-default">取消订单</div>
+                    <div class="btn btn-green">电话</div>
                 </div>
             </div>
             <div class="list">
@@ -186,7 +187,7 @@
                     <div class="item-info">
                         <div class="title">
                             <span>#16</span>
-                            <div class="status">待收货</div>
+                            <div class="status">已取消</div>
                         </div>
                         <div class="content">
                           <div class="lines">
@@ -206,7 +207,7 @@
                     <div class="item-info">
                         <div class="title">
                             <span>#16</span>
-                            <div class="status">退款中</div>
+                            <div class="status">已取消</div>
                         </div>
                         <div class="content">
                           <div class="lines">

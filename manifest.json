@@ -147,6 +147,14 @@
 					"html/BarItems/indexFrm.html"
 				],
 				"priority": 0
+			},
+			"html/BarItems/indexFrm.html": {
+				"resources": [],
+				"refer": [
+					"html/BarItemsMessage/indexFrm.html",
+					"html/BarItemsCategoryEdit/indexFrm.html"
+				],
+				"priority": 0
 			}
 		},
 		"idle": {
@@ -184,7 +192,6 @@
 				"html/BarHomeSettingAddress/indexFrm.html",
 				"html/BarHelpArticle/indexFrm.html",
 				"image/demo5.png",
-				"html/BarItemsCategoryEdit/indexFrm.html",
 				"css/aui-iconfont.2.0.ttf",
 				"image/bg.png",
 				"image/bank/pufa.png",
@@ -248,7 +255,6 @@
 				"html/BarHomeSetting/indexFrm.html",
 				"html/tongji/data_userlist.html",
 				"launch/launch1080x1920.png",
-				"html/BarItemsMessage/indexFrm.html",
 				"html/BarItemsEdit/indexWin.html",
 				"html/BarFinanceRecorded/indexWin.html",
 				"html/BarHomeSettingPay/indexWin.html",

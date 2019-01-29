@@ -77,7 +77,8 @@
 
 <body>
     <div id="app" class="app">
-      <ul class="aui-list aui-list-noborder aui-list-in">
+    	
+      <!--<ul class="aui-list aui-list-noborder aui-list-in">
           <li class="aui-list-item">
               <div class="aui-list-item-inner">
                 <div class="aui-list-item-title">分类名称</div>
@@ -85,9 +86,11 @@
                   <input class="input" type="text" placeholder="不超过6个字符" v-model="cateData.name">
                 </div>
               </div>
+              
           </li>
-      </ul>
-      <ul class="aui-list aui-list-noborder aui-list-in">
+      </ul>-->
+     
+      <!--<ul class="aui-list aui-list-noborder aui-list-in">
           <li class="aui-list-item">
               <div class="aui-list-item-inner">
                 <div class="aui-list-item-title">分类排序</div>
@@ -96,35 +99,98 @@
                 </div>
               </div>
           </li>
-      </ul>
+      </ul>-->
       <ul class="aui-list aui-list-noborder aui-list-in">
           <li class="aui-list-item">
               <div class="aui-list-item-inner">
-                  <div class="aui-list-item-title">类目缩略图</div>
+                  <div class="aui-list-item-title">动态图片或视频</div>
               </div>
-          </li>
+          </li> 
+          
+      </ul>
+      <ul class="upimages">
+      	<div class="textarea" style="
+    margin: 4%;
+">
+          <textarea name="name" placeholder="输入发布文字描述"></textarea>
+        </div>
       </ul>
       <ul class="upimages">
         <li class="images" v-if="cateData.thum">
-          <img :src="cateData.thum" alt="">
+          <img id="x0" src="http://192.168.123.2/huiyoufu_api/img/store/37020201000001fstore_logo.png" alt="">
           <div class="badge" tapmde @click="deleteImage">
             <i class="aui-iconfont aui-icon-close"></i>
           </div>
         </li>
+          <li class="images" v-if="cateData.thum">
+          <img id="x1" src="http://192.168.123.2/huiyoufu_api/img/store/37020201000001fstore_logo.png" alt="">
+          <div class="badge" tapmde @click="deleteImage">
+            <i class="aui-iconfont aui-icon-close"></i>
+          </div>
+        </li>
+        <li class="images" v-if="cateData.thum">
+          <img id="x2" src="http://192.168.123.2/huiyoufu_api/img/store/37020201000001fstore_logo.png" alt="">
+          <div class="badge" tapmde @click="deleteImage">
+            <i class="aui-iconfont aui-icon-close"></i>
+          </div>
+        </li>
+       
+
         <li class="add" tapmde @click="addImage" v-if="!cateData.thum">
           <i class="ali-iconfont icon-tianjiatupian" style="font-size:30px;color:#777"></i>
+        </li>
+      </ul>
+      <ul class="upimages">
+      	 <li class="images" v-if="cateData.thum">
+          <img id="x3" src="http://192.168.123.2/huiyoufu_api/img/store/37020201000001fstore_logo.png" alt="">
+          <div class="badge" tapmde @click="deleteImage">
+            <i class="aui-iconfont aui-icon-close"></i>
+          </div>
+        </li>
+        <li class="images" v-if="cateData.thum">
+          <img id="x4" src="http://192.168.123.2/huiyoufu_api/img/store/37020201000001fstore_logo.png" alt="">
+          <div class="badge" tapmde @click="deleteImage">
+            <i class="aui-iconfont aui-icon-close"></i>
+          </div>
+        </li>
+        <li class="images" v-if="cateData.thum">
+          <img id="x5" src="http://192.168.123.2/huiyoufu_api/img/store/37020201000001fstore_logo.png" alt="">
+          <div class="badge" tapmde @click="deleteImage">
+            <i class="aui-iconfont aui-icon-close"></i>
+          </div>
+        </li>
+      </ul>
+      
+      <ul class="upimages">
+      	 <li class="images" v-if="cateData.thum">
+          <img id="x6" src="http://192.168.123.2/huiyoufu_api/img/store/37020201000001fstore_logo.png" alt="">
+          <div class="badge" tapmde @click="deleteImage">
+            <i class="aui-iconfont aui-icon-close"></i>
+          </div>
+        </li>
+        <li class="images" v-if="cateData.thum">
+          <img id="x7" src="http://192.168.123.2/huiyoufu_api/img/store/37020201000001fstore_logo.png" alt="">
+          <div class="badge" tapmde @click="deleteImage">
+            <i class="aui-iconfont aui-icon-close"></i>
+          </div>
+        </li>
+        <li class="images" v-if="cateData.thum">
+          <img id="x8" src="http://192.168.123.2/huiyoufu_api/img/store/37020201000001fstore_logo.png" alt="">
+          <div class="badge" tapmde @click="deleteImage">
+            <i class="aui-iconfont aui-icon-close"></i>
+          </div>
         </li>
       </ul>
       <ul class="aui-list aui-list-in">
           <li class="aui-list-item">
               <div class="aui-list-item-inner">
-                  <div class="aui-list-item-title">请选择父分类</div>
+                  <div class="aui-list-item-title">请选动态类型</div>
               </div>
           </li>
           <li class="aui-list-item">
               <div class="aui-list-item-inner">
                   <div class="aui-list-item-title">
-                    <span tapmde @click="changeAllCate">顶级分类</span>
+                    <span tapmde @click="changeAllCate">普通类型</span>
                     <span v-for="(select,index) in thisSelect" tapmde @click="changeFCate(select,index)" v-key="select">
                       <i class="aui-iconfont aui-icon-right"></i>
                       <span v-text="select.name"></span>
@@ -134,247 +200,359 @@
               </div>
           </li>
 
-          <li class="aui-list-item" v-for="(cate,key) in cateTree" v-key="cate" tapmde @click="selecCate(cate)">
+          <!--<li class="aui-list-item" v-for="(cate,key) in cateTree" v-key="cate" tapmde @click="selecCate(cate)">
               <div class="aui-list-item-inner">
                   <div class="aui-list-item-title">
                     <span v-text="cate.name"></span>
                     <i v-if="cate.is_has_child" class="aui-iconfont aui-icon-right"></i>
                   </div>
               </div>
-          </li>
+          </li>-->
       </ul>
       <div class="buttons">
-          <div class="longBtn" id="btn" tapmde @click="send">新增分类</div>
+          <div class="longBtn" id="fabu" >发布</div>
       </div>
     </div>
 </body>
-<script src="../../script/api.js"></script>
+<script src="../../js/mui.min.js"></script>
+<script  src="../../js/jquery.min.js"></script>
+
+<script>
+function plusReady(){
+	Gpicnum=0;
+mui("body").on("tap",".icon-tianjiatupian",function(){
+	getImage();
+});
+mui("body").on("tap","#fabu",function(){
+	upload();
+});
+
+}
+
+mui.ready(function () {			
+			if(window.plus){
+				plusReady();
+			}else{
+				document.addEventListener('plusready', plusReady, false);
+			};
+})
+
+function getImage() {  
+	var cmr = plus.camera.getCamera();
+    cmr.captureImage(function(p) {
+        plus.io.resolveLocalFileSystemURL(p, function(entry) {
+ 	
+ // alert('entry='+entry);
+//for(var key in entry){
+//  alert('key='+key+'  entry[key]'+entry[key]);
+//}
+  appendFile(entry.fullPath,Gpicnum); //处理图片的地方
+  Gpicnum=Gpicnum+1;
+  alert('Gpicnum='+Gpicnum);
+        }, function(e) {
+            plus.nativeUI.alert(e.message);
+        });
+    }, function(e) {}, {
+        filename: "_doc/camera/"
+    });
+} 
+
+// 添加文件
+var f1=null;
+var f2=null;
+var f3=null,f4=null,f5=null,f6=null,f7=null,f8=null;
+objpic={};
+function appendFile(path,num){
+
+  var img = new Image();
+        img.src = path;        // 传过来的图片路径在这里用。
+        img.onload = function () {
+            var that = this;
+            //生成比例 
+            var w = that.width,
+                h = that.height,
+                scale = w / h; 
+                w = 480 || w;              //480  你想压缩到多大，改这里
+                h = w / scale;
+
+            //生成canvas
+            var canvas = document.createElement('canvas');
+
+            var ctx = canvas.getContext('2d');
+
+            $(canvas).attr({width : w, height : h});
+
+            ctx.drawImage(that, 0, 0, w, h);
+
+            var base64 = canvas.toDataURL('image/jpeg', 1 || 0.8 );   //1最清晰，越低越模糊。有一点不清楚这里明明设置的是jpeg。弹出 base64 开头的一段 data：image/png;却是png。哎开心就好，开心就好
+//              alert(base64);  
+			objpic["files"+(num+1)]=base64;
+			//添加预览效果图
+            var pic = document.getElementById("x"+num);    
+            pic.src = base64;                    //这里丢到img 的 src 里面就能看到效果了
+    }
+
+}
+
+
+// 上传文件
+function upload(){ 
+
+     var wt=plus.nativeUI.showWaiting();
+     var url = 'http://192.168.123.2/huiyoufu_api/upload.php';
+            var dataType ='json';
+            //发送数据  
+            var data = { 
+                files1:f1,       //base64数据
+                files2:f2,
+              files3:f3
+//              files4:f4,
+//              files5:f5,
+//              files6:f6,
+//              files7:f7,
+//              files8:f8,
+//              files9:f9
+            };    
+            $.post(url, objpic, success, dataType);                          
+}
+        //成功响应的回调函数
+ var success = function(response) {   
+            plus.nativeUI.closeWaiting();
+            if(response != null){
+                alert("上传成功"); 
+            }
+
+     }  
+     
+</script>
+
+<!--<script src="../../script/api.js"></script>
 <script src="../../script/vue.min.js"></script>
 <script src="../../script/fastclick.js"></script>
-<script src="../../script/app.js"></script>
+<script src="../../script/app.js"></script>-->
 <script>
-    window.addEventListener('load', function() {
-        FastClick.attach(document.querySelector('.longBtn'));
-        FastClick.attach(document.querySelector('.add'));
-    }, false);
-    apiready = function() {
-        api.parseTapmode();
-        if(api.pageParam && api.pageParam.type == 'edit'){
-          $api.text($api.byId('btn'), '修改分类')
-        }else if(api.pageParam && api.pageParam.type == 'add'){
-          $api.text($api.byId('btn'), '新增分类')
-        }
-        // 编辑模式传递过来的 id
-        var editId = api.pageParam.id;
-        // vue 控制
-        var app = new Vue({
-            el: '#app',
-            data: {
-              changeThis:true,
-              showText:'',
-              cateTree:[],
-              thisSelect:[],
-              cateData:{
-                name:'',
-                thum:'',
-                pid:0,
-                sort: '',
-                status:1,
-              }
-            },
-            computed: {
-
-            },
-            methods: {
-              changeAllCate:function(){
-                var that = this;
-                that.cateData.pid = 0;
-                that.thisSelect = [];
-                that.getChildCateTree(0)
-              },
-              changeFCate:function(select,index){
-                var that = this;
-                if(select.id == that.cateData.pid){
-                  return;
-                }
-                that.cateData.pid = select.id;
-                if(index < that.thisSelect.length){
-                  that.thisSelect = that.thisSelect.slice(0,index+1);
-                  that.cateTree = [];
-                  that.getChildCateTree(select.id);
-                }
-              },
-              selecCate:function(cate){
-                var that = this;
-                that.thisSelect.push(cate);
-                that.cateData.pid = cate.id;
-                if(cate.is_has_child){
-                  that.getChildCateTree(cate.id);
-                }else {
-                  that.cateTree = [];
-                }
-              },
-              targetAll:function(){
-                if(api.pageParam.type == 'edit' && this.changeThis){
-                  this.showText='当前';
-                  this.changeThis = false;
-                  this.changeAllCate();
-                }else {
-                  return;
-                }
-              },
-              deleteImage:function(){
-                var that = this;
-                api.confirm({
-                    title: '提示',
-                    msg: '确定要删除缩略图吗？',
-                    buttons: ['确定', '取消']
-                }, function(ret, err) {
-                   if(ret.buttonIndex == 1){
-                     that.cateData.thum = '';
-                   }
-                });
-              },
-              addImage:function(){
-                var that = this
-                api.actionSheet({
-                    cancelTitle: '取消',
-                    buttons: ['拍照', '图库']
-                }, function(ret, err) {
-                    var index = ['','camera', 'library'];
-                    if (ret.buttonIndex == 3) {
-                        return
-                    }
-                    api.getPicture({
-                        sourceType: index[ret.buttonIndex],
-                        encodingType: 'jpg',
-                        mediaValue: 'pic',
-                        destinationType: 'url',
-                        allowEdit: true,
-                        quality: 50,
-                        saveToPhotoAlbum: false
-                    }, function(ret, err) {
-                        if (ret) {
-                            $app.ajax({
-                                url: $app.apiUrl.uploadFile,
-                                type:'files',
-                                data:{
-                                  file:ret.data
-                                },
-                                values:{
-                                  save_path: '/public/upload/applet/',
-                                  is_rename: false
-                                }
-                            }).then(function(ret) {
-                                that.cateData.thum = ret.data.host_file_path;
-                            })
-                        } else {
-
-                        }
-                    });
-                });
-              },
-              send:function(){
-                var that = this;
-                var url;
-                var data = {
-                  name:that.cateData.name,
-                  thum:that.cateData.thum,
-                  pid:that.cateData.pid,
-                  sort:that.cateData.sort,
-                  status:that.cateData.status
-                };
-                if(api.pageParam.type == 'edit'){
-                  url = $app.apiUrl.cateUpdate;
-                  data.id = that.cateData.id;
-                }else if (api.pageParam.type == 'add') {
-                  url = $app.apiUrl.cateSave;
-                }
-                $app.ajax({
-                  url:url,
-                  data:data
-                }).then(function(ret){
-                   $app.toast(ret.msg)
-                   api.sendEvent({
-                       name: 'refreshCate'
-                   });
-                   setTimeout(function() {
-                       api.closeWin();
-                   }, 1000)
-                })
-              },
-              getChildCateTree:function(pid){
-                var that = this;
-                $app.ajax({
-                  url:$app.apiUrl.cateReadChild,
-                  data:{
-                    pid:pid
-                  }
-                }).then(function(ret){
-                  that.cateTree = ret.data
-                })
-              },
-              readCateDetail:function(id){
-                var that = this;
-                $app.ajax({
-                  url:$app.apiUrl.cateRead,
-                  data:{
-                    id:id
-                  }
-                }).then(function(ret){
-                  that.cateData = ret.data;
-                  that.reGetThisSelect(ret.data.pid)
-                })
-              },
-              reGetThisSelect:function(pid){
-                var that = this;
-                if(pid == 0){
-                  return;
-                }
-                $app.ajax({
-                  url:$app.apiUrl.cateRead,
-                  data:{
-                    id:pid
-                  }
-                }).then(function(ret){
-                  that.thisSelect.unshift(ret.data);
-                  that.reGetThisSelect(ret.data.pid)
-                })
-              }
-            },
-            watch: {
-
-            },
-            mounted:function(){
-              if(api.pageParam.type == 'edit'){
-                this.showText='重选';
-                this.readCateDetail(editId);
-              }else if (api.pageParam.type == 'add') {
-                this.getChildCateTree(0);
-                this.showText='当前';
-              }
-            }
-        });
-
-        api.addEventListener({
-            name: 'deleteCate'
-        }, function(){
-          $app.ajax({
-            url:$app.apiUrl.cateDelete,
-            data:{
-              id:app.$data.cateData.id
-            }
-          }).then(function(ret){
-            $app.toast(ret.msg)
-            api.sendEvent({
-                name: 'refreshCate'
-            });
-            setTimeout(function() {
-                api.closeWin();
-            }, 1000)
-          })
-        });
-    };
+//  window.addEventListener('load', function() {
+//      FastClick.attach(document.querySelector('.longBtn'));
+//      FastClick.attach(document.querySelector('.add'));
+//  }, false);
+//  apiready = function() {
+//      api.parseTapmode();
+//      if(api.pageParam && api.pageParam.type == 'edit'){
+//        $api.text($api.byId('btn'), '修改分类')
+//      }else if(api.pageParam && api.pageParam.type == 'add'){
+//        $api.text($api.byId('btn'), '新增分类')
+//      }
+//      // 编辑模式传递过来的 id
+//      var editId = api.pageParam.id;
+//      // vue 控制
+//      var app = new Vue({
+//          el: '#app',
+//          data: {
+//            changeThis:true,
+//            showText:'',
+//            cateTree:[],
+//            thisSelect:[],
+//            cateData:{
+//              name:'',
+//              thum:'',
+//              pid:0,
+//              sort: '',
+//              status:1,
+//            }
+//          },
+//          computed: {
+//
+//          },
+//          methods: {
+//            changeAllCate:function(){
+//              var that = this;
+//              that.cateData.pid = 0;
+//              that.thisSelect = [];
+//              that.getChildCateTree(0)
+//            },
+//            changeFCate:function(select,index){
+//              var that = this;
+//              if(select.id == that.cateData.pid){
+//                return;
+//              }
+//              that.cateData.pid = select.id;
+//              if(index < that.thisSelect.length){
+//                that.thisSelect = that.thisSelect.slice(0,index+1);
+//                that.cateTree = [];
+//                that.getChildCateTree(select.id);
+//              }
+//            },
+//            selecCate:function(cate){
+//              var that = this;
+//              that.thisSelect.push(cate);
+//              that.cateData.pid = cate.id;
+//              if(cate.is_has_child){
+//                that.getChildCateTree(cate.id);
+//              }else {
+//                that.cateTree = [];
+//              }
+//            },
+//            targetAll:function(){
+//              if(api.pageParam.type == 'edit' && this.changeThis){
+//                this.showText='当前';
+//                this.changeThis = false;
+//                this.changeAllCate();
+//              }else {
+//                return;
+//              }
+//            },
+//            deleteImage:function(){
+//              var that = this;
+//              api.confirm({
+//                  title: '提示',
+//                  msg: '确定要删除缩略图吗？',
+//                  buttons: ['确定', '取消']
+//              }, function(ret, err) {
+//                 if(ret.buttonIndex == 1){
+//                   that.cateData.thum = '';
+//                 }
+//              });
+//            },
+//            addImage:function(){
+//              var that = this
+//              api.actionSheet({
+//                  cancelTitle: '取消',
+//                  buttons: ['拍照', '图库']
+//              }, function(ret, err) {
+//                  var index = ['','camera', 'library'];
+//                  if (ret.buttonIndex == 3) {
+//                      return
+//                  }
+//                  api.getPicture({
+//                      sourceType: index[ret.buttonIndex],
+//                      encodingType: 'jpg',
+//                      mediaValue: 'pic',
+//                      destinationType: 'url',
+//                      allowEdit: true,
+//                      quality: 50,
+//                      saveToPhotoAlbum: false
+//                  }, function(ret, err) {
+//                      if (ret) {
+//                          $app.ajax({
+//                              url: $app.apiUrl.uploadFile,
+//                              type:'files',
+//                              data:{
+//                                file:ret.data
+//                              },
+//                              values:{
+//                                save_path: '/public/upload/applet/',
+//                                is_rename: false
+//                              }
+//                          }).then(function(ret) {
+//                              that.cateData.thum = ret.data.host_file_path;
+//                          })
+//                      } else {
+//
+//                      }
+//                  });
+//              });
+//            },
+//            send:function(){
+//              var that = this;
+//              var url;
+//              var data = {
+//                name:that.cateData.name,
+//                thum:that.cateData.thum,
+//                pid:that.cateData.pid,
+//                sort:that.cateData.sort,
+//                status:that.cateData.status
+//              };
+//              if(api.pageParam.type == 'edit'){
+//                url = $app.apiUrl.cateUpdate;
+//                data.id = that.cateData.id;
+//              }else if (api.pageParam.type == 'add') {
+//                url = $app.apiUrl.cateSave;
+//              }
+//              $app.ajax({
+//                url:url,
+//                data:data
+//              }).then(function(ret){
+//                 $app.toast(ret.msg)
+//                 api.sendEvent({
+//                     name: 'refreshCate'
+//                 });
+//                 setTimeout(function() {
+//                     api.closeWin();
+//                 }, 1000)
+//              })
+//            },
+//            getChildCateTree:function(pid){
+//              var that = this;
+//              $app.ajax({
+//                url:$app.apiUrl.cateReadChild,
+//                data:{
+//                  pid:pid
+//                }
+//              }).then(function(ret){
+//                that.cateTree = ret.data
+//              })
+//            },
+//            readCateDetail:function(id){
+//              var that = this;
+//              $app.ajax({
+//                url:$app.apiUrl.cateRead,
+//                data:{
+//                  id:id
+//                }
+//              }).then(function(ret){
+//                that.cateData = ret.data;
+//                that.reGetThisSelect(ret.data.pid)
+//              })
+//            },
+//            reGetThisSelect:function(pid){
+//              var that = this;
+//              if(pid == 0){
+//                return;
+//              }
+//              $app.ajax({
+//                url:$app.apiUrl.cateRead,
+//                data:{
+//                  id:pid
+//                }
+//              }).then(function(ret){
+//                that.thisSelect.unshift(ret.data);
+//                that.reGetThisSelect(ret.data.pid)
+//              })
+//            }
+//          },
+//          watch: {
+//
+//          },
+//          mounted:function(){
+//            if(api.pageParam.type == 'edit'){
+//              this.showText='重选';
+//              this.readCateDetail(editId);
+//            }else if (api.pageParam.type == 'add') {
+//              this.getChildCateTree(0);
+//              this.showText='当前';
+//            }
+//          }
+//      });
+//
+//      api.addEventListener({
+//          name: 'deleteCate'
+//      }, function(){
+//        $app.ajax({
+//          url:$app.apiUrl.cateDelete,
+//          data:{
+//            id:app.$data.cateData.id
+//          }
+//        }).then(function(ret){
+//          $app.toast(ret.msg)
+//          api.sendEvent({
+//              name: 'refreshCate'
+//          });
+//          setTimeout(function() {
+//              api.closeWin();
+//          }, 1000)
+//        })
+//      });
+//  };
 </script>
 
 </html>
